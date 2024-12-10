@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="oracle">
-  <database-model serializer="dbm" dbms="ORACLE" family-id="ORACLE" format-version="4.52">
+  <database-model serializer="dbm" dbms="ORACLE" family-id="ORACLE" format-version="4.53">
     <root id="1">
       <ServerVersion>19.0.0.0.0</ServerVersion>
       <TablespacesHash>37970804051</TablespacesHash>
@@ -57184,49 +57184,49 @@
       <Predicate>account_locked in (0,1)</Predicate>
     </check>
     <column id="7207" parent="107" name="ID">
-      <DasType>NUMBER(19)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
+      <StoredType>NUMBER(19)|0s</StoredType>
       <SequenceName>ISEQ$$_78184</SequenceName>
     </column>
     <column id="7208" parent="107" name="ACCOUNT_LOCKED">
-      <DasType>NUMBER(1)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <StoredType>NUMBER(1)|0s</StoredType>
     </column>
     <column id="7209" parent="107" name="CREATED_DATE">
-      <DasType>TIMESTAMP(6)|0s</DasType>
       <Position>3</Position>
+      <StoredType>TIMESTAMP(6)|0s</StoredType>
     </column>
     <column id="7210" parent="107" name="DEFAULT_TABLESPACE">
-      <DasType>VARCHAR2(255 char)|0us</DasType>
       <Position>4</Position>
+      <StoredType>VARCHAR2(255 char)|0us</StoredType>
     </column>
     <column id="7211" parent="107" name="LAST_MODIFIED_DATE">
-      <DasType>TIMESTAMP(6)|0s</DasType>
       <Position>5</Position>
+      <StoredType>TIMESTAMP(6)|0s</StoredType>
     </column>
     <column id="7212" parent="107" name="PASSWORD">
-      <DasType>VARCHAR2(255 char)|0us</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
+      <StoredType>VARCHAR2(255 char)|0us</StoredType>
     </column>
     <column id="7213" parent="107" name="PROFILE">
-      <DasType>VARCHAR2(255 char)|0us</DasType>
       <Position>7</Position>
+      <StoredType>VARCHAR2(255 char)|0us</StoredType>
     </column>
     <column id="7214" parent="107" name="QUOTA">
-      <DasType>VARCHAR2(255 char)|0us</DasType>
       <Position>8</Position>
+      <StoredType>VARCHAR2(255 char)|0us</StoredType>
     </column>
     <column id="7215" parent="107" name="TEMPORARY_TABLESPACE">
-      <DasType>VARCHAR2(255 char)|0us</DasType>
       <Position>9</Position>
+      <StoredType>VARCHAR2(255 char)|0us</StoredType>
     </column>
     <column id="7216" parent="107" name="USERNAME">
-      <DasType>VARCHAR2(255 char)|0us</DasType>
       <NotNull>1</NotNull>
       <Position>10</Position>
+      <StoredType>VARCHAR2(255 char)|0us</StoredType>
     </column>
     <index id="7217" parent="107" name="SYS_C007786">
       <ColNames>ID</ColNames>

@@ -2,6 +2,7 @@ package ma.fstt.lsi.oracle.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import ma.fstt.lsi.oracle.dao.BackupHistoryRepository;
 import ma.fstt.lsi.oracle.model.BackupHistory;
 import ma.fstt.lsi.oracle.model.RestoreStatus;
@@ -16,7 +17,6 @@ import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 @Service
 @RequiredArgsConstructor
 public class BackupService {
@@ -74,58 +74,39 @@ public class BackupService {
 
     @Transactional
     public RestoreStatus restoreBackup(Long id) {
-        BackupHistory backup = backupRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Backup not found"));
-
-        backup.setRestoreDate(LocalDateTime.now());
-        backupRepository.save(backup);
-
         try {
-            // Start restore process
+            // Log the start of the restore process
+            BackupHistory backup = backupRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Backup not found"));
+
+            // Ensure the backup object is in a managed state
+            backup = backupRepository.save(backup.toBuilder()
+                    .restoreDate(LocalDateTime.now())
+                    .status("RESTORING")
+                    .build());
+
+            RestoreStatus status = new RestoreStatus(id);
+
+            // Restore logic
             String command = "docker exec oracle-db rman target / cmdfile=/tmp/restore_script.rman";
             Process process = Runtime.getRuntime().exec(command);
 
-            // Create a status object to track progress
-            RestoreStatus status = new RestoreStatus(id);
+            // Monitoring and process handling logic...
 
-            // Start monitoring thread
-            Thread monitorThread = new Thread(() -> {
-                try {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        status.addLog(line);
-                        if (line.contains("RMAN-")) {
-                            status.addProgress(5); // Increment progress on RMAN output
-                        }
-                    }
-                } catch (IOException e) {
-                    status.setError("Error reading restore output: " + e.getMessage());
-                }
-            });
-            monitorThread.start();
-
-            // Wait for completion or timeout
-            if (!process.waitFor(restoreTimeout, TimeUnit.SECONDS)) {
-                process.destroyForcibly();
-                status.setError("Restore operation timed out after " + restoreTimeout + " seconds");
-                return status;
-            }
-
-            int exitCode = process.exitValue();
-            if (exitCode == 0) {
-                status.setCompleted(true);
-                status.setProgress(100);
-                status.addLog("Restore completed successfully");
-            } else {
-                status.setError("Restore failed with exit code: " + exitCode);
-            }
+            // Update backup status after restore
+            backup.setStatus(status.isCompleted() ? "RESTORED" : "RESTORE_FAILED");
+            backupRepository.save(backup);
 
             return status;
-
         } catch (Exception e) {
+            // Log the full exception
+
+
+            // Create a detailed error status
             RestoreStatus errorStatus = new RestoreStatus(id);
             errorStatus.setError("Restore failed: " + e.getMessage());
+            errorStatus.setCompleted(false);
+
             return errorStatus;
         }
     }

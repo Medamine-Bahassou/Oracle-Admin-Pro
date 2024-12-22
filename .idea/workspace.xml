@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="727ca132-605f-4d5f-9e93-c988b0484c3b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/config/BackupProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/dao/BackupHistoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/dto/BackupDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/BackupHistory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/RestoreStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/backup_script.rman" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/restore_script.rman" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/OracleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/OracleApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/BackupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/BackupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/BackupLogController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/dao/BackupLogRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/BackupLog.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/BackupHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/BackupHistory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/BackupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/BackupService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/resources/application.properties" afterDir="false" />
     </list>
@@ -232,7 +221,7 @@
       <workItem from="1733995549732" duration="14000" />
       <workItem from="1734724439997" duration="9577000" />
       <workItem from="1734777232228" duration="626000" />
-      <workItem from="1734877509234" duration="17998000" />
+      <workItem from="1734877509234" duration="20037000" />
     </task>
     <servers />
   </component>

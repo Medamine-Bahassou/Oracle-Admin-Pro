@@ -1,11 +1,8 @@
 package ma.fstt.lsi.oracle.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDateTime;
-
 
 @Data
 @Entity
@@ -15,6 +12,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Version
+    private Long version;  // Add this field
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -30,4 +30,3 @@ public class User {
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 }
-

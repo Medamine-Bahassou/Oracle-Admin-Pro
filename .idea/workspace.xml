@@ -5,6 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="727ca132-605f-4d5f-9e93-c988b0484c3b" name="Changes" comment="">
+ 
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/BackupHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/BackupHistory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/BackupService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/BackupService.java" afterDir="false" />
+ 
       <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/RoleController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/dto/RoleRequest.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/RoleService.java" afterDir="false" />
@@ -12,6 +17,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/UserService.java" afterDir="false" />
+ 
       <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +28,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -43,23 +50,31 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.OracleApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.OracleApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Sauvegarde&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/hp/Desktop/Git/Oracle Project °/Oracle-Project-/backend/oracle&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/X1 carbon/Desktop/EJB_TP&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -84,19 +99,6 @@
       <option name="USE_OPTIONS" value="false" />
       <option name="OPTIONS" value="" />
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Oracle-Project-" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Oracle-Project-" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Oracle-Project-" />
@@ -134,13 +136,6 @@
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="launchJavascriptDebuger" value="false" />
       <method v="2" />
-    </configuration>
-    <configuration name="OracleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="oracle" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="ma.fstt.lsi.oracle.OracleApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration default="true" type="Tox" factoryName="Tox">
       <module name="Oracle-Project-" />
@@ -191,12 +186,27 @@
       <option name="docutils_open_in_browser" value="false" />
       <method v="2" />
     </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Oracle-Project-" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OracleApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="21" />
+      <module name="oracle" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ma.fstt.lsi.oracle.OracleApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
-        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -212,10 +222,23 @@
       <workItem from="1733474986029" duration="1658000" />
       <workItem from="1733512115112" duration="3928000" />
       <workItem from="1733516139846" duration="4234000" />
+ 
+      <workItem from="1733774951494" duration="1097000" />
+      <workItem from="1733776216634" duration="5309000" />
+      <workItem from="1733840946729" duration="11000" />
+      <workItem from="1733862265313" duration="3009000" />
+      <workItem from="1733875051545" duration="76000" />
+      <workItem from="1733876024532" duration="3000" />
+      <workItem from="1733995549732" duration="14000" />
+      <workItem from="1734724439997" duration="9577000" />
+      <workItem from="1734777232228" duration="626000" />
+      <workItem from="1734877509234" duration="20037000" />
+ 
       <workItem from="1733777390676" duration="4198000" />
       <workItem from="1733862041600" duration="3321000" />
       <workItem from="1734725552988" duration="4721000" />
       <workItem from="1734786020043" duration="263000" />
+ 
     </task>
     <servers />
   </component>

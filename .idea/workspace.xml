@@ -5,15 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="727ca132-605f-4d5f-9e93-c988b0484c3b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/config/DataSourceConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/dao/UserDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/RoleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/dto/RoleRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/RoleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e54ac81f-67c7-4aee-940b-f81838aa9875.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e54ac81f-67c7-4aee-940b-f81838aa9875.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/OracleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/OracleApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -31,10 +29,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -214,6 +212,10 @@
       <workItem from="1733474986029" duration="1658000" />
       <workItem from="1733512115112" duration="3928000" />
       <workItem from="1733516139846" duration="4234000" />
+      <workItem from="1733777390676" duration="4198000" />
+      <workItem from="1733862041600" duration="3321000" />
+      <workItem from="1734725552988" duration="4721000" />
+      <workItem from="1734786020043" duration="263000" />
     </task>
     <servers />
   </component>

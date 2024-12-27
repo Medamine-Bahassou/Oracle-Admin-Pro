@@ -36,17 +36,33 @@ public class DatabaseSecurityService {
     }
 
     public void configureVPD(String tableName, String policyFunction) {
-        String sql = "BEGIN " +
+        // Check if the policy function already exists
+        String checkFunctionSQL = "SELECT COUNT(*) FROM USER_OBJECTS WHERE OBJECT_TYPE = 'FUNCTION' AND OBJECT_NAME = ?";
+        Integer count = jdbcTemplate.queryForObject(checkFunctionSQL, Integer.class, policyFunction);
+
+        if (count == null || count == 0) {
+            // Function doesn't exist, so create it
+            String functionCreationSQL = "CREATE OR REPLACE FUNCTION " + policyFunction + " (schema_name IN VARCHAR2, table_name IN VARCHAR2) " +
+                    "RETURN VARCHAR2 AS BEGIN " +
+                    "    -- Dynamically get ID, for example from a session variable or custom logic " +
+                    "    RETURN 'id = 1'; " +  // Example: restrict rows where id = 1 dynamically
+                    "END;";
+            jdbcTemplate.execute(functionCreationSQL);
+        }
+
+        // Now add the VPD policy dynamically
+        String vpdSQL = "BEGIN " +
                 "DBMS_RLS.ADD_POLICY(" +
                 "  object_schema => USER, " +
-                "  object_name => '" + tableName + "', " +
-                "  policy_name => '" + tableName + "_policy', " +
+                "  object_name => ?, " +
+                "  policy_name => ? , " +
                 "  function_schema => USER, " +
-                "  policy_function => '" + policyFunction + "', " +
-                "  statement_types => 'SELECT,UPDATE,DELETE,INSERT'" +
+                "  policy_function => ? " +
                 ");" +
                 "END;";
-        jdbcTemplate.execute(sql);
+
+        // Execute the VPD policy creation with parameterized values
+        jdbcTemplate.update(vpdSQL, tableName, tableName + "_policy", policyFunction);
     }
 
 }

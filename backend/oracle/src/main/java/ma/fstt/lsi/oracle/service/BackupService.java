@@ -36,7 +36,8 @@ public class BackupService {
 
         try {
             // Update the command with the correct path to the script inside the Docker container
-            String command = "docker exec oracle-db rman target / cmdfile=/tmp/backup_script.rman";
+            //String command = "docker exec oracle-db rman target / cmdfile=/tmp/backup_script.rman";
+            String command = "rman target / cmdfile=C:/Users/hp/Desktop/Git/Oracle Project °/Oracle-Project-/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/backup_script.rman";
 
             Process process = Runtime.getRuntime().exec(command);
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -88,7 +89,9 @@ public class BackupService {
             RestoreStatus status = new RestoreStatus(id);
 
             // Restore logic
-            String command = "docker exec oracle-db rman target / cmdfile=/tmp/restore_script.rman";
+            //String command = "docker exec oracle-db rman target / cmdfile=/tmp/restore_script.rman";
+            String command = "rman target / cmdfile=C:/Users/hp/Desktop/Git/Oracle Project °/Oracle-Project-/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/restore_script.rman";
+
             Process process = Runtime.getRuntime().exec(command);
 
             // Monitoring and process handling logic...

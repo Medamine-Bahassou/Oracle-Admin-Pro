@@ -1,0 +1,48 @@
+
+  <aside class="w-64 bg-gray-800 text-white flex flex-col fixed h-full">
+    <div class="p-4 flex items-center justify-center">
+      <img  src="/logo.png" width=""/>
+    </div>
+    <nav class="flex-grow">
+      <ul>
+        <li routerLink="/" class="p-4 hover:bg-gray-700 cursor-pointer">
+            <i class="fas fa-tachometer-alt mr-2">
+            </i>
+            Dashboard
+        </li>
+        <li class="p-4 hover:bg-gray-700 cursor-pointer">
+            <i class="fas fa-database mr-2">
+            </i>
+            Databases
+        </li>
+        <li class="p-4 hover:bg-gray-700 cursor-pointer">
+            <i class="fas fa-table mr-2">
+            </i>
+            Tables
+        </li>
+        <li class="p-4 hover:bg-gray-700 cursor-pointer">
+            <i class="fas fa-users mr-2">
+            </i>
+            Users
+        </li>
+        <li class="p-4 hover:bg-gray-700 cursor-pointer">
+            <i class="fas fa-cogs mr-2">
+            </i>
+            Settings
+        </li>
+      </ul>
+    </nav>
+    <div class="">
+      <a class="flex items-center text-red-500 p-4 hover:bg-red-700 hover:text-white cursor-pointer" href="#">
+        <i class="fas fa-sign-out-alt mr-2">
+        </i>
+        Logout
+      </a>
+    </div>
+  </aside>
+  <!-- Main Content -->
+  <div class="p-6 ml-64">
+    <router-outlet/>
+  </div>
+
+

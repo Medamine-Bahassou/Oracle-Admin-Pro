@@ -5,6 +5,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import javax.sql.DataSource;
 
 @Configuration
@@ -13,8 +15,8 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:oracle:thin:@localhost:1521:ORCLCDB");
-        config.setUsername("C##USER");
+        config.setJdbcUrl("jdbc:oracle:thin:@localhost:1522:orcl1");
+        config.setUsername("c##user");
         config.setPassword("password");
         config.setDriverClassName("oracle.jdbc.OracleDriver");
 
@@ -30,4 +32,5 @@ public class DataSourceConfig {
 
         return new HikariDataSource(config);
     }
+
 }

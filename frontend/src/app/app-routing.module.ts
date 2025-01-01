@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {AdminComponent} from './components/admin/admin.component';
 import {LandingComponent} from './components/landing/landing.component';
+import {UsersComponent} from './components/users/users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' }, // Default route
@@ -14,7 +15,8 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Default child route
-      { path: 'dashboard', component: DashboardComponent }, // Overview page
+      { path: 'dashboard', component: DashboardComponent }, // Dashboard page
+      { path: 'users', component: UsersComponent },
     ]
   },
 

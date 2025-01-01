@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="727ca132-605f-4d5f-9e93-c988b0484c3b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/config/Angular.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/RmanServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/model/backup-history.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/config/DataSourceConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/config/DataSourceConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/BackupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/BackupController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/BackupHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/BackupHistory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/backup/backup.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/components/backup/backup.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/backup/backup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/components/backup/backup.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +23,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Sauvegarde" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -60,7 +56,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.OracleApplication.executor": "Run",
-    "git-widget-placeholder": "Sauvegarde",
+    "git-widget-placeholder": "f/Sauvegarde",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/X1 carbon/Desktop/EJB_TP",

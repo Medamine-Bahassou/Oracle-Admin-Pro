@@ -89,5 +89,79 @@
     </div>
   </div>
 
+  <!-- AWR Report -->
+  <div class="mt-8">
+    <h2 class="text-2xl font-bold mb-4">AWR Report</h2>
+    <div *ngIf="awrReport.length > 0" class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
+        <tr>
+          <th>Snapshot ID</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>SQL ID</th>
+          <th>Executions</th>
+          <th>Elapsed Time</th>
+          <th>CPU Time</th>
+          <th>Buffer Gets</th>
+          <th>Disk Reads</th>
+          <th>Rows Processed</th>
+          <th>Plan Hash Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of pagedAwrReport">
+          <td>{{ row.snapshotId }}</td>
+          <td>{{ row.startTime }}</td>
+          <td>{{ row.endTime }}</td>
+          <td>{{ row.sqlId }}</td>
+          <td>{{ row.executions }}</td>
+          <td>{{ row.elapsedTime }}</td>
+          <td>{{ row.cpuTime }}</td>
+          <td>{{ row.bufferGets }}</td>
+          <td>{{ row.diskReads }}</td>
+          <td>{{ row.rowsProcessed }}</td>
+          <td>{{ row.planHashValue }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <p *ngIf="awrReport.length === 0" class="mt-4 text-gray-600">No AWR data found.</p>
+    <div *ngIf="awrReport.length > 0" class="join mt-4">
+      <button class="join-item btn" [disabled]="currentPageAwr === 0" (click)="previousPageAwr()">«</button>
+      <button class="join-item btn" [disabled]="true">Page {{ currentPageAwr + 1}} of {{ totalPagesAwr}}</button>
+      <button class="join-item btn" [disabled]="currentPageAwr >= totalPagesAwr -1 " (click)="nextPageAwr()">»</button>
+    </div>
+  </div>
 
+  <!-- ASH Report -->
+  <div class="mt-8">
+    <h2 class="text-2xl font-bold mb-4">ASH Report</h2>
+    <div *ngIf="ashReport.length > 0" class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
+        <tr>
+          <th>Session ID</th>
+          <th>Event</th>
+          <th>Wait Class</th>
+          <th>Sample Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ash of pagedAshReport">
+          <td>{{ ash.sessionId }}</td>
+          <td>{{ ash.event }}</td>
+          <td>{{ ash.waitClass }}</td>
+          <td>{{ ash.sampleTime }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <p *ngIf="ashReport.length === 0" class="mt-4 text-gray-600">No ASH data found.</p>
+    <div *ngIf="ashReport.length > 0" class="join mt-4">
+      <button class="join-item btn" [disabled]="currentPageAsh === 0" (click)="previousPageAsh()">«</button>
+      <button class="join-item btn" [disabled]="true">Page {{ currentPageAsh + 1}} of {{ totalPagesAsh}}</button>
+      <button class="join-item btn" [disabled]="currentPageAsh >= totalPagesAsh -1 " (click)="nextPageAsh()">»</button>
+    </div>
+  </div>
 </main>

@@ -4,6 +4,8 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {AdminComponent} from './components/admin/admin.component';
 import {LandingComponent} from './components/landing/landing.component';
 import {UsersComponent} from './components/users/users.component';
+import {SlowQueriesComponent} from './components/optimisation/slow-queries/slow-queries.component';
+import {ScheduleStatisticsComponent} from './components/optimisation/schedule-statistics/schedule-statistics.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' }, // Default route
@@ -17,6 +19,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Default child route
       { path: 'dashboard', component: DashboardComponent }, // Dashboard page
       { path: 'users', component: UsersComponent },
+      { path: 'slow', component: SlowQueriesComponent },
+      { path: 'schedule', component: ScheduleStatisticsComponent },
     ]
   },
 

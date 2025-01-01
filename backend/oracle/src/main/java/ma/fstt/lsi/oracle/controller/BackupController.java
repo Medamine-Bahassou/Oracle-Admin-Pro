@@ -17,6 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/api/backups")
+@CrossOrigin(origins = "*")
 public class BackupController {
 
     private final BackupService backupService;

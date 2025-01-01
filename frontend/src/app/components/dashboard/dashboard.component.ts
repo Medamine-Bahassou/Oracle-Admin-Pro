@@ -20,6 +20,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ashReport: any[] = [];
   private destroy$ = new Subject<void>();
 
+  // Pagination for AWR Report
+  currentPageAwr = 0;
+  itemsPerPageAwr = 10;
+  pagedAwrReport: any[] = [];
+  totalPagesAwr: number = 0;
+  awrTableData: any[] = []; // to hold formatted data for the table
+
+  // Pagination for ASH Report
+  currentPageAsh = 0;
+  itemsPerPageAsh = 10; // Set to 10 rows per page
+  pagedAshReport: any[] = [];
+  totalPagesAsh: number = 0;
+
   constructor(private performanceService: PerformanceService, private awrService: AwrService, private ashService: AshService) {}
 
   ngOnInit() {
@@ -44,6 +57,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.awrService.getAWRReport().pipe(takeUntil(this.destroy$)).subscribe({
         next: (data) => {
           this.awrReport = data;
+          this.formatAwrTableData();
+          this.setPagedAwrReport();
         },
         error: (err) => {
           console.error('Error fetching AWR Report', err);
@@ -57,6 +72,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.ashService.getASHReport().pipe(takeUntil(this.destroy$)).subscribe({
         next: (data) => {
           this.ashReport = data;
+          this.setPagedAshReport();
         },
         error: (err) => {
           console.error('Error fetching ASH Report', err);
@@ -72,7 +88,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   createChart(canvasId: string, label: string) {
-    const chartConfig: ChartConfiguration = {
+    const chartConfig: {
+      data: {
+        datasets: {
+          backgroundColor: string;
+          borderColor: string;
+          data: number[];
+          borderWidth: number;
+          label: string
+        }[];
+        labels: string[]
+      };
+      options: { responsive: boolean; scales: { y: { beginAtZero: boolean } } };
+      type: "bar" | "line" | "scatter" | "bubble" | "pie" | "doughnut" | "polarArea" | "radar"
+    } = {
       type: 'bar' as ChartType,
       data: {
         labels: [label],
@@ -225,6 +254,71 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     }
     pdf.save('ash_report.pdf');
+  }
+  formatAwrTableData() {
+    this.awrTableData = [];
+    for (const awr of this.awrReport) {
+      for (const stat of awr.topSQLStats) {
+        this.awrTableData.push({
+          snapshotId: awr.snapshotId,
+          startTime: awr.startTime,
+          endTime: awr.endTime,
+          sqlId: stat.sqlId,
+          executions: stat.executions,
+          elapsedTime: stat.elapsedTime,
+          cpuTime: stat.cpuTime,
+          bufferGets: stat.bufferGets,
+          diskReads: stat.diskReads,
+          rowsProcessed: stat.rowsProcessed,
+          planHashValue: stat.planHashValue
+        });
+      }
+    }
+  }
+
+  setPagedAwrReport() {
+    const startIndex = this.currentPageAwr * this.itemsPerPageAwr;
+    this.pagedAwrReport = this.awrTableData.slice(startIndex, startIndex + this.itemsPerPageAwr);
+    this.totalPagesAwr = Math.ceil(this.awrTableData.length / this.itemsPerPageAwr);
+  }
+
+
+  nextPageAwr() {
+    if(this.currentPageAwr < this.totalPagesAwr -1) {
+      this.currentPageAwr++;
+      this.setPagedAwrReport();
+    }
+
+  }
+
+  previousPageAwr() {
+    if (this.currentPageAwr > 0) {
+      this.currentPageAwr--;
+      this.setPagedAwrReport();
+    }
+  }
+
+
+  setPagedAshReport() {
+    const startIndex = this.currentPageAsh * this.itemsPerPageAsh;
+    this.pagedAshReport = this.ashReport.slice(startIndex, startIndex + this.itemsPerPageAsh);
+    this.totalPagesAsh = Math.ceil(this.ashReport.length / this.itemsPerPageAsh);
+  }
+
+
+  nextPageAsh() {
+    if(this.currentPageAsh < this.totalPagesAsh -1) {
+      this.currentPageAsh++;
+      this.setPagedAshReport();
+    }
+
+  }
+
+  previousPageAsh() {
+    if (this.currentPageAsh > 0) {
+      this.currentPageAsh--;
+      this.setPagedAshReport();
+    }
   }
 
 

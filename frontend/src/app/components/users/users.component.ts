@@ -4,30 +4,33 @@ import { Subject, takeUntil, forkJoin } from 'rxjs';
 import Swal from 'sweetalert2';
 import { RoleService } from "../../services/user/role/role.service";
 
-interface User{
+interface User {
   id?: number
-  username:string
+  username: string
   password?: string
-  defaultTablespace:string
+  defaultTablespace: string
   temporaryTablespace: string
-  profile:string
-  quota:string
+  profile: string
+  quota: string
   accountLocked: boolean
-  selectedRole?:string
-  userRoles?:string[]
-  email?:string
+  selectedRole?: string
+  userRoles?: string[]
+  email?: string
 }
 
-interface RoleDto{
+interface RoleDto {
   role: string
   privileges: string
 }
+
 interface RoleResponseDto {
   ROLE: string
 }
+
 interface PrivilegeResponseDto {
   PRIVILEGE: string
 }
+
 interface RoleEdit {
   roleName: string;
   privileges: string;
@@ -42,7 +45,7 @@ interface RoleEdit {
 export class UsersComponent implements OnInit, OnDestroy {
   users: User[] = [];
   newUser: User = { username: '', defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
-  selectedUser: User = {  username: '', defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
+  selectedUser: User = { username: '', defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
   showModal: boolean = false;
   modalType: 'create' | 'edit' = 'create';
   roles: RoleDto[] = [];
@@ -51,11 +54,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   showRoleModal = false;
   showEditRoleModal = false;
   showEditRolePrivilegesModal = false;
+  showAssignRoleModal = false;
+  selectedUserRole:string="";
   private destroy$ = new Subject<void>();
   @ViewChild('userModal') userModal!: ElementRef;
   @ViewChild('roleModal') roleModal!: ElementRef;
   @ViewChild('editRoleModal') editRoleModal!: ElementRef;
   @ViewChild('editRolePrivilegeModal') editRolePrivilegeModal!: ElementRef;
+  @ViewChild('assignRoleModal') assignRoleModal!: ElementRef;
   constructor(private userService: UserService, private roleService: RoleService) { }
 
   ngOnInit(): void {
@@ -66,6 +72,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.getAllUsers().pipe(takeUntil(this.destroy$)).subscribe({
       next: (users) => {
         this.users = users;
+        this.users.forEach(user => this.loadUserRoles(user));
+
       },
       error: (err) => {
         this.handleError(err)
@@ -76,11 +84,10 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.roleService.getAllRoles().pipe(takeUntil(this.destroy$)).subscribe({
       next: (roles: any) => {
         // Ensure that server returns correct formatting like camelcase instead upper case for role naming during all http requests/responses
-
-        this.roles = roles.map((role: RoleResponseDto) => ({role: role.ROLE.replace('C##', ''), privileges: ''}));
+        this.roles = roles.map((role: RoleResponseDto) => ({ role: role.ROLE.replace('C##', ''), privileges: '' }));
 
         // then continue with correct lower /camelcase format in front end
-        this.roles = this.roles.map(role => ({...role, role: role.role.toLowerCase()}))
+        this.roles = this.roles.map(role => ({ ...role, role: role.role.toLowerCase() }))
         this.loadPrivilegesToRoles();
 
       },
@@ -89,8 +96,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       }
     })
   }
-
-
   loadPrivilegesToRoles() {
     const privilegeObservables = this.roles.map(role =>
       this.roleService.getRolePrivileges(role.role)
@@ -99,7 +104,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     forkJoin(privilegeObservables).pipe(takeUntil(this.destroy$)).subscribe({
       next: (privilegesArrays) => {
         privilegesArrays.forEach((privileges, index) => {
-          this.roles[index].privileges = privileges.map((privilege:PrivilegeResponseDto) => privilege.PRIVILEGE).join(',');
+          this.roles[index].privileges = privileges.map((privilege: PrivilegeResponseDto) => privilege.PRIVILEGE).join(',');
         });
       },
       error: (err) => {
@@ -108,23 +113,21 @@ export class UsersComponent implements OnInit, OnDestroy {
     })
   }
   loadUserRoles(user: User) {
-    this.roleService.getUserRoles(user.username).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (userRoles:any) => {
-        user.userRoles = userRoles.map((role:any) => role.GRANTED_ROLE);
+    const usernameWithPrefix = `c##${user.username.toLowerCase()}`;
+    this.roleService.getUserRoles(usernameWithPrefix).pipe(takeUntil(this.destroy$)).subscribe({
+      next: (userRoles: any) => {
+        user.userRoles = userRoles.map((role: any) => role.GRANTED_ROLE);
         if (userRoles && userRoles.length > 0) {
           user.selectedRole = userRoles[0].GRANTED_ROLE;
         } else {
           user.selectedRole = "";
         }
-
       },
       error: (err) => {
         this.handleError(err)
       }
     })
   }
-
-
   openCreateModal() {
     this.selectedUser = { username: '', defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
     this.modalType = 'create';
@@ -143,12 +146,11 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.users.push(user);
         this.showSuccess('User created successfully');
         this.closeModal();
-        this.newUser = {  username: '', defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
+        this.newUser = { username: '', defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
       },
       error: (err) => {
         this.handleError(err)
       }
-
     })
   }
 
@@ -160,7 +162,7 @@ export class UsersComponent implements OnInit, OnDestroy {
             user.id === updatedUser.id ? updatedUser : user);
           this.showSuccess('User updated successfully');
           this.closeModal();
-          this.selectedUser = { username: '',  defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
+          this.selectedUser = { username: '', defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
         },
         error: (err) => {
           this.handleError(err)
@@ -168,7 +170,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       });
     }
   }
-
   deleteUser(id: number) {
     Swal.fire({
       title: 'Are you sure?',
@@ -192,12 +193,25 @@ export class UsersComponent implements OnInit, OnDestroy {
       }
     });
   }
-  assignRoleToUser(user: User, event: any) {
-    user.selectedRole = event.target.value;
-    this.roleService.assignRoleToUser(user.username.trim().toUpperCase(), (user.selectedRole || '').trim().toUpperCase()).pipe(takeUntil(this.destroy$)).subscribe({
+
+  openAssignRoleModal(user:User) {
+    this.selectedUser = user;
+    this.showAssignRoleModal = true;
+    this.selectedUserRole="";
+    this.assignRoleModal.nativeElement.showModal();
+  }
+  closeAssignRoleModal() {
+    this.selectedUserRole="";
+    this.showAssignRoleModal = false;
+    this.assignRoleModal.nativeElement.close();
+  }
+  assignRole(){
+    const usernameWithPrefix =  `${this.selectedUser.username.toLowerCase()}`;
+    this.roleService.assignRoleToUser(usernameWithPrefix, (this.selectedUserRole || '').trim().toUpperCase()).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.showSuccess('Role assigned successfully');
-        this.loadUserRoles(user);
+        this.loadUserRoles(this.selectedUser);
+        this.closeAssignRoleModal()
       },
       error: (err) => {
         this.handleError(err);
@@ -215,11 +229,10 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.editRoleModal.nativeElement.showModal();
   }
   openEditRolePrivilegesModal(role: RoleDto) {
-    this.selectedRoleToEdit = { roleName: role.role.replace('C##','').toLowerCase(), privileges: role.privileges };
+    this.selectedRoleToEdit = { roleName: role.role.replace('C##', '').toLowerCase(), privileges: role.privileges };
     this.showEditRolePrivilegesModal = true;
     this.editRolePrivilegeModal.nativeElement.showModal();
   }
-
   closeRoleModal() {
     this.newRole = { roleName: '', privileges: '' };
     this.showRoleModal = false;
@@ -234,9 +247,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.showEditRolePrivilegesModal = false;
     this.editRolePrivilegeModal.nativeElement.close();
   }
-
-  createRoleWithPrivileges() {
-    this.roleService.createRoleWithPrivileges(this.newRole.roleName,  this.newRole.privileges.split(',')).pipe(takeUntil(this.destroy$)).subscribe({
+  createRole() {
+    this.roleService.createRole(this.newRole.roleName).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.showSuccess('Role created successfully');
         this.loadRoles();
@@ -249,9 +261,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   updateRolePrivileges() {
-    this.roleService.createRoleWithPrivileges(this.selectedRoleToEdit.roleName, this.selectedRoleToEdit.privileges.split(',')).pipe(takeUntil(this.destroy$)).subscribe({
+    const privilegesArray = this.selectedRoleToEdit.privileges.split(',').map((privilege: string) => privilege.trim());
+    this.roleService.grantPrivilegesToRole(this.selectedRoleToEdit.roleName, privilegesArray).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
-        this.showSuccess('Role updated successfully');
+        this.showSuccess('Privileges granted successfully');
         this.loadRoles();
         this.closeEditRolePrivilegesModal();
       },
@@ -261,7 +274,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     })
   }
   revokeRoleFromUser(user: User, role: string) {
-    this.roleService.revokeRoleFromUser(user.username, role).pipe(takeUntil(this.destroy$)).subscribe({
+    const usernameWithPrefix = `c##${user.username.toLowerCase()}`;
+    this.roleService.revokeRoleFromUser(usernameWithPrefix, role).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.showSuccess('Role revoked successfully');
         this.loadUserRoles(user);
@@ -270,7 +284,6 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.handleError(err)
       }
     })
-
   }
   dropRole(roleName: string) {
     this.roleService.dropRole(roleName).pipe(takeUntil(this.destroy$)).subscribe({
@@ -285,10 +298,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
-    this.selectedUser = { username: '',  defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
+    this.selectedUser = { username: '', defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
     this.userModal.nativeElement.close();
   }
-  private handleError(err:any){
+  private handleError(err: any) {
     this.showError('Error occurred!', err.message)
   }
   showSuccess(message: string) {

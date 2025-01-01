@@ -11,6 +11,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import { UsersComponent } from './components/users/users.component';
 import {FormsModule} from '@angular/forms';
+import { SlowQueriesComponent } from './components/optimisation/slow-queries/slow-queries.component';
+import { ScheduleStatisticsComponent } from './components/optimisation/schedule-statistics/schedule-statistics.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import {FormsModule} from '@angular/forms';
     LandingComponent,
     NavbarComponent,
     DashboardComponent,
-    UsersComponent
+    UsersComponent,
+    SlowQueriesComponent,
+    ScheduleStatisticsComponent
   ],
   imports: [
     BrowserModule,

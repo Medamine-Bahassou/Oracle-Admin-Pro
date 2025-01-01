@@ -1,4 +1,3 @@
-
 <div class="p-6">
   <h2 class="text-2xl font-bold mb-4">Users</h2>
 
@@ -16,51 +15,93 @@
   <!-- User Modal  -->
   <dialog #userModal id="userModal" class="modal">
     <div class="modal-box">
-      <h3 class="text-xl font-bold mb-4">{{ selectedUser.id ? 'Edit User' : 'Create New User'}}</h3>
+      <h3 class="text-xl font-bold mb-4">
+        {{selectedUser.id ? 'Edit User' : 'Create New User'}}
+      </h3>
       <div class="mb-4">
-        <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
-        <input type="text" id="username" class="input input-bordered w-full "
-               [(ngModel)]="selectedUser.username"/>
+        <label for="username" class="block text-gray-700 text-sm font-bold mb-2"
+        >Username</label
+        >
+        <input
+          type="text"
+          id="username"
+          class="input input-bordered w-full "
+          [(ngModel)]="selectedUser.username"
+        />
       </div>
       <div class="mb-4">
-        <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-        <input type="password" id="password" class="input input-bordered w-full "
-               [(ngModel)]="selectedUser.password"/>
+        <label for="password" class="block text-gray-700 text-sm font-bold mb-2"
+        >Password</label
+        >
+        <input
+          type="password"
+          id="password"
+          class="input input-bordered w-full "
+          [(ngModel)]="selectedUser.password"
+        />
       </div>
       <div class="mb-4">
-        <label for="defaultTablespace" class="block text-gray-700 text-sm font-bold mb-2">Default Tablespace</label>
-        <input type="text" id="defaultTablespace" class="input input-bordered w-full "
-               [(ngModel)]="selectedUser.defaultTablespace"/>
+        <label
+          for="defaultTablespace"
+          class="block text-gray-700 text-sm font-bold mb-2"
+        >Default Tablespace</label
+        >
+        <input
+          type="text"
+          id="defaultTablespace"
+          class="input input-bordered w-full "
+          [(ngModel)]="selectedUser.defaultTablespace"
+        />
       </div>
       <div class="mb-4">
-        <label for="temporaryTablespace" class="block text-gray-700 text-sm font-bold mb-2">Temporary Tablespace</label>
-        <input type="text" id="temporaryTablespace" class="input input-bordered w-full "
-               [(ngModel)]="selectedUser.temporaryTablespace"/>
+        <label
+          for="temporaryTablespace"
+          class="block text-gray-700 text-sm font-bold mb-2"
+        >Temporary Tablespace</label
+        >
+        <input
+          type="text"
+          id="temporaryTablespace"
+          class="input input-bordered w-full "
+          [(ngModel)]="selectedUser.temporaryTablespace"
+        />
       </div>
       <div class="mb-4">
-        <label for="profile" class="block text-gray-700 text-sm font-bold mb-2">Profile</label>
-        <input type="text" id="profile" class="input input-bordered w-full "
-               [(ngModel)]="selectedUser.profile"/>
+        <label for="profile" class="block text-gray-700 text-sm font-bold mb-2"
+        >Profile</label
+        >
+        <input
+          type="text"
+          id="profile"
+          class="input input-bordered w-full "
+          [(ngModel)]="selectedUser.profile"
+        />
       </div>
       <div class="mb-4">
-        <label for="quota" class="block text-gray-700 text-sm font-bold mb-2">Quota</label>
-        <input type="text" id="quota" class="input input-bordered w-full "
-               [(ngModel)]="selectedUser.quota"/>
+        <label for="quota" class="block text-gray-700 text-sm font-bold mb-2"
+        >Quota</label
+        >
+        <input
+          type="text"
+          id="quota"
+          class="input input-bordered w-full "
+          [(ngModel)]="selectedUser.quota"
+        />
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2">
           Account Locked
         </label>
-        <input type="checkbox" class="toggle" [(ngModel)]="selectedUser.accountLocked"/>
+        <input type="checkbox" class="toggle" [(ngModel)]="selectedUser.accountLocked" />
       </div>
       <div class="flex justify-end">
-        <button (click)="selectedUser.id ? updateUser() : createUser()"
-                class="btn btn-primary mr-2">
+        <button
+          (click)="selectedUser.id ? updateUser() : createUser()"
+          class="btn btn-primary mr-2"
+        >
           {{selectedUser.id ? 'Update' : 'Create'}}
         </button>
-        <button (click)="closeModal()" class="btn btn-ghost">
-          Cancel
-        </button>
+        <button (click)="closeModal()" class="btn btn-ghost">Cancel</button>
       </div>
     </div>
     <form method="dialog" class="modal-backdrop">
@@ -73,24 +114,21 @@
     <div class="modal-box">
       <h3 class="text-xl font-bold mb-4">Create New Role</h3>
       <div class="mb-4">
-        <label  class="block text-gray-700 text-sm font-bold mb-2">Role Name</label>
-        <input type="text"   class="input input-bordered w-full "
-               [(ngModel)]="newRole.roleName"/>
-      </div>
-      <div class="mb-4">
-        <label  class="block text-gray-700 text-sm font-bold mb-2">Privileges (comma-separated)</label>
-        <input type="text" class="input input-bordered w-full "
-               [(ngModel)]="newRole.privileges"/>
+        <label class="block text-gray-700 text-sm font-bold mb-2"
+        >Role Name</label
+        >
+        <input
+          type="text"
+          class="input input-bordered w-full "
+          [(ngModel)]="newRole.roleName"
+        />
       </div>
 
       <div class="flex justify-end">
-        <button (click)="createRoleWithPrivileges()"
-                class="btn btn-primary mr-2">
+        <button (click)="createRole()" class="btn btn-primary mr-2">
           Create Role
         </button>
-        <button (click)="closeRoleModal()" class="btn btn-ghost">
-          Cancel
-        </button>
+        <button (click)="closeRoleModal()" class="btn btn-ghost">Cancel</button>
       </div>
     </div>
     <form method="dialog" class="modal-backdrop">
@@ -105,18 +143,32 @@
         <table class="table w-full">
           <thead>
           <tr class="bg-gray-100">
-            <th class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Role Name</th>
-            <th class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+            <th
+              class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Role Name
+            </th>
+            <th
+              class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Actions
+            </th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let role of roles" class="border-b border-gray-200">
             <td class="text-sm">{{ role.role }}</td>
             <td class="text-sm">
-              <button (click)="openEditRolePrivilegesModal(role)" class="btn btn-sm btn-warning mr-1">
+              <button
+                (click)="openEditRolePrivilegesModal(role)"
+                class="btn btn-sm btn-warning mr-1"
+              >
                 Edit
               </button>
-              <button (click)="dropRole(role.role)" class="btn btn-sm btn-error">
+              <button
+                (click)="dropRole(role.role)"
+                class="btn btn-sm btn-error"
+              >
                 Delete
               </button>
             </td>
@@ -139,19 +191,24 @@
     <div class="modal-box">
       <h3 class="text-xl font-bold mb-4">Edit Role Privileges</h3>
       <div class="mb-4">
-        <label  class="block text-gray-700 text-sm font-bold mb-2">Role Name</label>
-        <input type="text"   class="input input-bordered w-full "
-               [(ngModel)]="selectedRoleToEdit.roleName" disabled/>
+        <label class="block text-gray-700 text-sm font-bold mb-2"
+        >Role Name</label
+        >
+        <input
+          type="text"
+          class="input input-bordered w-full "
+          [(ngModel)]="selectedRoleToEdit.roleName"
+          disabled
+        />
       </div>
       <div class="mb-4">
-        <label  class="block text-gray-700 text-sm font-bold mb-2">Privileges (comma-separated)</label>
+        <label class="block text-gray-700 text-sm font-bold mb-2">Privileges (comma-separated)</label>
         <input type="text" class="input input-bordered w-full "
                [(ngModel)]="selectedRoleToEdit.privileges"/>
       </div>
 
       <div class="flex justify-end">
-        <button (click)="updateRolePrivileges()"
-                class="btn btn-primary mr-2">
+        <button (click)="updateRolePrivileges()" class="btn btn-primary mr-2">
           Update
         </button>
         <button (click)="closeEditRolePrivilegesModal()" class="btn btn-ghost">
@@ -163,16 +220,67 @@
       <button>close</button>
     </form>
   </dialog>
-
+  <!-- Assign Role Modal  -->
+  <dialog #assignRoleModal id="assignRoleModal" class="modal">
+    <div class="modal-box">
+      <h3 class="text-xl font-bold mb-4">Roles for User : {{selectedUser.username}}</h3>
+      <div class="mb-4" *ngIf="selectedUser.userRoles && selectedUser.userRoles.length > 0">
+        <label class="block text-gray-700 text-sm font-bold mb-2">Current Roles</label>
+        <div *ngFor="let role of selectedUser.userRoles">
+          <span class="badge badge-ghost mr-1 ">{{ role }}</span>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2"
+        >Select Role</label
+        >
+        <select class="select select-bordered w-full "
+                [(ngModel)]="selectedUserRole">
+          <option value="">Select Role</option>
+          <option *ngFor="let role of roles" [value]="role.role"
+          >{{role.role}}</option>
+        </select>
+      </div>
+      <div class="flex justify-end">
+        <button (click)="assignRole()" class="btn btn-primary mr-2">
+          Assign Role
+        </button>
+        <button (click)="closeAssignRoleModal()" class="btn btn-ghost">Cancel</button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
   <div class="overflow-x-auto">
     <table class="table w-full">
       <thead>
       <tr class="bg-gray-100">
-        <th class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
-        <th class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Username</th>
-        <th class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
-        <th class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Roles</th>
-        <th class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+        <th
+          class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+        >
+          ID
+        </th>
+        <th
+          class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+        >
+          Username
+        </th>
+        <th
+          class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+        >
+          Email
+        </th>
+        <th
+          class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+        >
+          Roles
+        </th>
+        <th
+          class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+        >
+          Actions
+        </th>
       </tr>
       </thead>
       <tbody>
@@ -181,20 +289,9 @@
         <td class="text-sm">{{ user.username }}</td>
         <td class="text-sm">{{ user.email }}</td>
         <td class="text-sm">
-          <div class="flex items-center" *ngIf="user.id">
-            <select class="select select-sm select-bordered w-32 mr-1"
-                    (change)="assignRoleToUser(user, $event)" [(ngModel)]="user.selectedRole">
-              <option value="">Select Role</option>
-              <option *ngFor="let role of roles" [value]="role.role"
-                      [selected]="role.role === user.selectedRole">{{role.role}}</option>
-            </select>
-            <div *ngFor="let role of user.userRoles">
-              <div class="flex items-center">
-                <span class="badge badge-ghost mr-1 ">{{role}}</span>
-                <button (click)="revokeRoleFromUser(user, role)" class="btn btn-xs btn-error">X</button>
-              </div>
-            </div>
-          </div>
+          <button (click)="openAssignRoleModal(user)" class="btn btn-sm btn-primary mr-1">
+            Roles
+          </button>
         </td>
         <td class="text-sm">
           <button (click)="openEditModal(user)" class="btn btn-sm btn-warning mr-1">

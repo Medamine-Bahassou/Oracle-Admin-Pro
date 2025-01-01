@@ -25,9 +25,38 @@ public class RoleService {
      */
     @Transactional(rollbackOn = Exception.class)
     public void assignRoleToUser(String username, String role) {
-        String sql = String.format("GRANT %s TO %s", role, username);
+        String sql = String.format("GRANT c##"+"%s TO c##"+"%s", role, username);
         jdbcTemplate.execute(sql);
     }
+
+    /**
+     * Creates a new role
+     * @param roleName The name of the role to create
+     */
+    @Transactional(rollbackOn = Exception.class)
+    public void createRole(String roleName){
+        String createRoleSql = String.format("CREATE ROLE c##"+"%s", roleName);
+        jdbcTemplate.execute(createRoleSql);
+    }
+
+    /**
+     * Grant privileges to an existing role.
+     *
+     * @param roleName   the name of the role to grant privileges to
+     * @param privileges the privileges to grant to the role
+     */
+    @Transactional(rollbackOn = Exception.class)
+    public void grantPrivilegesToRole(String roleName, String[] privileges) {
+        if(privileges == null || privileges.length == 0){
+            return;
+        }
+        String prefixedRoleName = "c##" + roleName;
+        for (String privilege : privileges) {
+            String grantPrivilegeSql = String.format("GRANT %s TO %s", privilege, prefixedRoleName);
+            jdbcTemplate.execute(grantPrivilegeSql);
+        }
+    }
+
 
     /**
      * Create a new role with specified privileges.
@@ -38,16 +67,10 @@ public class RoleService {
     @Transactional(rollbackOn = Exception.class)
     public void createRoleWithPrivileges(String roleName, String[] privileges) {
         // Create role
-        String createRoleSql = String.format("CREATE ROLE c##"+"%s", roleName);
-        jdbcTemplate.execute(createRoleSql);
-
+        createRole(roleName);
         // Grant privileges to the role
-        for (String privilege : privileges) {
-            String grantPrivilegeSql = String.format("GRANT %s TO %s", privilege, roleName);
-            jdbcTemplate.execute(grantPrivilegeSql);
-        }
+        grantPrivilegesToRole(roleName, privileges);
     }
-
     /**
      * Revoke a role from a user.
      *
@@ -67,11 +90,9 @@ public class RoleService {
      */
     @Transactional(rollbackOn = Exception.class)
     public void dropRole(String roleName) {
-        String sql = String.format("DROP ROLE %s", roleName);
+        String sql = String.format("DROP ROLE c##"+"%s", roleName);
         jdbcTemplate.execute(sql);
     }
-
-
 
     /**
      * Get all roles in the database.

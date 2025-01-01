@@ -64,92 +64,30 @@
       </div>
     </div>
   </div>
-  <!-- Recent Activity -->
-  <section class="bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-4">
-      Recent Activity
-    </h2>
-    <ul>
-      <li class="flex items-center justify-between p-4 border-b border-gray-200">
-        <div class="flex items-center">
-          <img alt="User avatar with a generic profile picture" class="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/XCGqenTLTNy0BCJlcRybxwEspff9VaqaoOejzoTk4dFdVnAQB.jpg" width="40"/>
-          <div class="ml-4">
-            <p class="font-bold">
-              John Doe
-            </p>
-            <p class="text-gray-600">
-              Added a new table to the database
-            </p>
-          </div>
-        </div>
-        <span class="text-gray-500">
-         2 hours ago
-        </span>
-      </li>
-      <li class="flex items-center justify-between p-4 border-b border-gray-200">
-        <div class="flex items-center">
-          <img alt="User avatar with a generic profile picture" class="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/XCGqenTLTNy0BCJlcRybxwEspff9VaqaoOejzoTk4dFdVnAQB.jpg" width="40"/>
-          <div class="ml-4">
-            <p class="font-bold">
-              Jane Smith
-            </p>
-            <p class="text-gray-600">
-              Updated user permissions
-            </p>
-          </div>
-        </div>
-        <span class="text-gray-500">
-         4 hours ago
-        </span>
-      </li>
-      <li class="flex items-center justify-between p-4 border-b border-gray-200">
-        <div class="flex items-center">
-          <img alt="User avatar with a generic profile picture" class="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/XCGqenTLTNy0BCJlcRybxwEspff9VaqaoOejzoTk4dFdVnAQB.jpg" width="40"/>
-          <div class="ml-4">
-            <p class="font-bold">
-              Michael Brown
-            </p>
-            <p class="text-gray-600">
-              Deleted a database
-            </p>
-          </div>
-        </div>
-        <span class="text-gray-500">
-         6 hours ago
-        </span>
-      </li>
-      <li class="flex items-center justify-between p-4 border-b border-gray-200">
-        <div class="flex items-center">
-          <img alt="User avatar with a generic profile picture" class="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/XCGqenTLTNy0BCJlcRybxwEspff9VaqaoOejzoTk4dFdVnAQB.jpg" width="40"/>
-          <div class="ml-4">
-            <p class="font-bold">
-              Emily Davis
-            </p>
-            <p class="text-gray-600">
-              Created a new user
-            </p>
-          </div>
-        </div>
-        <span class="text-gray-500">
-         8 hours ago
-        </span>
-      </li>
-      <li class="flex items-center justify-between p-4 border-b border-gray-200">
-        <div class="flex items-center">
-          <img alt="User avatar with a generic profile picture" class="h-10 w-10 rounded-full" height="40" src="https://storage.googleapis.com/a1aa/image/XCGqenTLTNy0BCJlcRybxwEspff9VaqaoOejzoTk4dFdVnAQB.jpg" width="40"/>
-          <div class="ml-4">
-            <p class="font-bold">
-              David Wilson
-            </p>
-            <p class="text-gray-600">
-              Modified table schema
-            </p>
-          </div>
-        </div>
-        <span class="text-gray-500">
-         10 hours ago
-        </span>
-      </li>
-    </ul>
-  </section>
+
+  <!-- charts -->
+  <div class="dashboard">
+    <h1>Performance Dashboard</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div>
+        <canvas id="cpuChart" width="400" height="200"></canvas>
+      </div>
+      <div>
+        <canvas id="memoryChart" width="400" height="200"></canvas>
+      </div>
+      <div>
+        <canvas id="ioChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+    <div class="mt-6 flex gap-4">
+      <button (click)="downloadAwrReport()" class="btn btn-primary">
+        Download AWR Report
+      </button>
+      <button (click)="downloadAshReport()" class="btn btn-primary">
+        Download ASH Report
+      </button>
+    </div>
+  </div>
+
+
 </main>

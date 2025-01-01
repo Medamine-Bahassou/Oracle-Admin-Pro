@@ -15,8 +15,8 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:oracle:thin:@localhost:1522:orcl1");
-        config.setUsername("c##user");
+        config.setJdbcUrl("jdbc:oracle:thin:@//localhost:1521/ORCL");
+        config.setUsername("C##USER");
         config.setPassword("password");
         config.setDriverClassName("oracle.jdbc.OracleDriver");
 

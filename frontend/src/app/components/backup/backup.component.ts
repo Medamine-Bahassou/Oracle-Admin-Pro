@@ -23,7 +23,7 @@ import {FormsModule} from '@angular/forms';
 @Component({
   selector: 'app-backup',
   templateUrl: './backup.component.html',
-  imports: [NgForOf, NgClass, NgIf, DatePipe, FontAwesomeModule, FormsModule],
+  imports: [NgForOf, NgClass, DatePipe, FontAwesomeModule, FormsModule],
   styleUrls: ['./backup.component.scss']
 })
 export class BackupComponent implements OnInit {

@@ -1,0 +1,81 @@
+<div class="container mx-auto p-4" >
+  <h1 class="text-3xl font-bold mb-6 text-white">Security Features</h1>
+
+  <div class="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+    <!-- Table Selection -->
+    <div class="mb-6">
+      <label class="block text-black text-sm font-bold mb-2" for="tableSelect">
+        Select Table
+      </label>
+      <div class="select-wrapper bg-white">
+        <select
+          [(ngModel)]="selectedTable"
+          (ngModelChange)="onTableSelect()"
+          class="bg-white text-black block w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
+          id="tableSelect"
+        >
+          <option value="">Select a table</option>
+          <option *ngFor="let table of tables" [value]="table">{{ table }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Column Selection -->
+    <div class="mb-6">
+      <label class="block text-black text-sm font-bold mb-2" for="columnSelect">
+        Select Column
+      </label>
+      <div class="select-wrapper">
+        <select
+          [(ngModel)]="selectedColumn"
+          class="bg-white text-black block w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
+          id="columnSelect"
+        >
+          <option value="">Select a column</option>
+          <option *ngFor="let column of columns" [value]="column">{{ column }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Policy Function -->
+    <div class="mb-6">
+      <label class="block text-black text-sm font-bold mb-2" for="policyFunction">
+        Policy Function
+      </label>
+      <input
+        [(ngModel)]="policyFunction"
+        class="bg-white text-black block w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out"
+        id="policyFunction"
+        type="text"
+        placeholder="Enter policy function"
+      >
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <button
+        (click)="enableTDE()"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        type="button"
+      >
+        Enable TDE
+      </button>
+
+      <button
+        (click)="enableAudit()"
+        class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+        type="button"
+      >
+        Enable Audit
+      </button>
+
+      <button
+        (click)="configureVPD()"
+        class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+        type="button"
+      >
+        Configure VPD
+      </button>
+    </div>
+  </div>
+</div>

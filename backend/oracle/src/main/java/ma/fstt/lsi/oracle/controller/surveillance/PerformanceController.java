@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/performance")
+@CrossOrigin(origins = "*")
 public class PerformanceController {
 
     @Autowired

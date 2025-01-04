@@ -21,21 +21,28 @@ public class RoleService {
      * Assign a role to a user.
      *
      * @param username the username to whom the role will be assigned
-     * @param role the role to assign
+     * @param role     the role to assign
      */
     @Transactional(rollbackOn = Exception.class)
     public void assignRoleToUser(String username, String role) {
-        String sql = String.format("GRANT c##"+"%s TO c##"+"%s", role, username);
+        String sql;
+        if (isCustomRole(role)) {
+            sql = String.format("GRANT c##"+"%s TO c##"+"%s", role, username);
+        } else {
+            sql = String.format("GRANT %s TO c##"+"%s", role, username);
+        }
         jdbcTemplate.execute(sql);
+
     }
 
     /**
      * Creates a new role
+     *
      * @param roleName The name of the role to create
      */
     @Transactional(rollbackOn = Exception.class)
-    public void createRole(String roleName){
-        String createRoleSql = String.format("CREATE ROLE c##"+"%s", roleName);
+    public void createRole(String roleName) {
+        String createRoleSql = String.format("CREATE ROLE c##%s", roleName);
         jdbcTemplate.execute(createRoleSql);
     }
 
@@ -47,7 +54,7 @@ public class RoleService {
      */
     @Transactional(rollbackOn = Exception.class)
     public void grantPrivilegesToRole(String roleName, String[] privileges) {
-        if(privileges == null || privileges.length == 0){
+        if (privileges == null || privileges.length == 0) {
             return;
         }
         String prefixedRoleName = "c##" + roleName;
@@ -61,7 +68,7 @@ public class RoleService {
     /**
      * Create a new role with specified privileges.
      *
-     * @param roleName the name of the role to create
+     * @param roleName   the name of the role to create
      * @param privileges the privileges to grant to the role
      */
     @Transactional(rollbackOn = Exception.class)
@@ -71,15 +78,16 @@ public class RoleService {
         // Grant privileges to the role
         grantPrivilegesToRole(roleName, privileges);
     }
+
     /**
-     * Revoke a role from a user.
+     * Revoke a privilege from a user.
      *
-     * @param username the username from whom the role will be revoked
-     * @param role the role to revoke
+     * @param username the username from whom the privilege will be revoked
+     * @param privilege the privilege to revoke
      */
     @Transactional(rollbackOn = Exception.class)
-    public void revokeRoleFromUser(String username, String role) {
-        String sql = String.format("REVOKE %s FROM %s", role, username);
+    public void revokeRoleFromUser(String username, String privilege) { // Changed role to privilege
+        String sql = String.format("REVOKE %s FROM C##" + "%s", privilege.toUpperCase(), username.toUpperCase()); // changed the method to revoke privileges instead of role
         jdbcTemplate.execute(sql);
     }
 
@@ -90,7 +98,7 @@ public class RoleService {
      */
     @Transactional(rollbackOn = Exception.class)
     public void dropRole(String roleName) {
-        String sql = String.format("DROP ROLE c##"+"%s", roleName);
+        String sql = String.format("DROP ROLE c##%s", roleName);
         jdbcTemplate.execute(sql);
     }
 
@@ -100,19 +108,30 @@ public class RoleService {
      * @return List of roles
      */
     public List<Map<String, Object>> getAllRoles() {
-        String sql = "SELECT * FROM DBA_ROLES WHERE ROLE LIKE 'C##%'";
+        String sql = "SELECT ROLE FROM DBA_ROLES";
         return jdbcTemplate.queryForList(sql);
     }
 
+
     /**
-     * Get roles assigned to a specific user.
+     * Get privileges assigned to a specific user.
      *
      * @param username the username to check
-     * @return List of roles assigned to the user
+     * @return List of privileges assigned to the user
      */
-    public List<Map<String, Object>> getUserRoles(String username) {
-        String sql = "SELECT GRANTED_ROLE FROM DBA_ROLE_PRIVS WHERE GRANTEE = ?";
-        return jdbcTemplate.queryForList(sql, username.toUpperCase());
+    public List<Map<String, Object>> getUserPrivileges(String username) {
+        String sql = """
+            SELECT PRIVILEGE
+            FROM sys.dba_sys_privs
+            WHERE grantee = ?
+            UNION
+            SELECT PRIVILEGE
+            FROM dba_role_privs rp JOIN role_sys_privs rsp ON (rp.granted_role = rsp.role)
+            WHERE rp.grantee = ?
+            ORDER BY 1
+            """;
+        String prefixedUsername = "C##" + username.toUpperCase(); // Prefix user name
+        return jdbcTemplate.queryForList(sql, prefixedUsername, prefixedUsername);
     }
 
     /**
@@ -124,5 +143,22 @@ public class RoleService {
     public List<Map<String, Object>> getRolePrivileges(String roleName) {
         String sql = "SELECT PRIVILEGE FROM ROLE_SYS_PRIVS WHERE ROLE = ?";
         return jdbcTemplate.queryForList(sql, roleName.toUpperCase());
+    }
+
+    /**
+     * Get roles assigned to a specific user.
+     *
+     * @param username the username to check
+     * @return List of roles assigned to the user
+     */
+    public List<Map<String, Object>> getUserRoles(String username) {
+        String sql = "SELECT granted_role FROM dba_role_privs WHERE grantee = ?";
+        String prefixedUsername = "C##" + username.toUpperCase();
+        return jdbcTemplate.queryForList(sql, prefixedUsername);
+    }
+    private boolean isCustomRole(String role) {
+        String sql = "SELECT COUNT(*) FROM DBA_ROLES WHERE ROLE = ?";
+        int count =  jdbcTemplate.queryForObject(sql, Integer.class, "C##"+role.toUpperCase());
+        return count > 0;
     }
 }

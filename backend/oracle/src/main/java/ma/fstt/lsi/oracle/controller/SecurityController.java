@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/security")
-@CrossOrigin(origins = "*")
 public class SecurityController {
     @Autowired
     private DatabaseSecurityService securityService;

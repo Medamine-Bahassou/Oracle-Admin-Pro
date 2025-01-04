@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/roles")
-@CrossOrigin(origins = "*")
 public class RoleController {
 
     private final RoleService roleService;
@@ -77,9 +76,9 @@ public class RoleController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<?> getUserRoles(@PathVariable String username) {
+    public ResponseEntity<?> getUserPrivileges(@PathVariable String username) {
         try {
-            return ResponseEntity.ok(roleService.getUserRoles(username));
+            return ResponseEntity.ok(roleService.getUserPrivileges(username));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -89,6 +88,14 @@ public class RoleController {
     public ResponseEntity<?> getRolePrivileges(@PathVariable String roleName) {
         try {
             return ResponseEntity.ok(roleService.getRolePrivileges(roleName));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/{username}/roles")
+    public ResponseEntity<?> getUserRoles(@PathVariable String username) {
+        try {
+            return ResponseEntity.ok(roleService.getUserRoles(username));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

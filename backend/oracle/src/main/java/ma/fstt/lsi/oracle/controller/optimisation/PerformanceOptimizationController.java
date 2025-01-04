@@ -14,7 +14,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/performance")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")  // Add this
 public class PerformanceOptimizationController {
 
     private final PerformanceOptimizationService performanceService;

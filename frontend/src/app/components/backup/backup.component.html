@@ -1,0 +1,237 @@
+<div class="min-h-screen bg-gray-100">
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+      <h1 class="text-2xl font-semibold text-gray-900">Backup Dashboard</h1>
+      <p class="mt-1 text-sm text-gray-500">Database Management System</p>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <!-- Date Range Filter -->
+    <div class="mb-6 bg-white rounded-lg shadow-sm p-4">
+      <h2 class="text-lg font-medium text-gray-900 mb-4">Date Range Filter</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div>
+          <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
+          <input
+            type="datetime-local"
+            id="startDate"
+            [(ngModel)]="dateRange.startDate"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          >
+        </div>
+        <div>
+          <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
+          <input
+            type="datetime-local"
+            id="endDate"
+            [(ngModel)]="dateRange.endDate"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          >
+        </div>
+        <div class="flex items-end">
+          <button
+            (click)="loadBackupHistory()"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Apply Filter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backup Operation Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <h3 class="text-lg font-medium text-gray-900">Full Backup</h3>
+          <button (click)="performFullBackup()"
+                  class="mt-3 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                  [disabled]="isOperationLoading">
+            <fa-icon [icon]="faDatabase" class="mr-2"></fa-icon>
+            Start Full Backup
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <h3 class="text-lg font-medium text-gray-900">Level 0 Backup</h3>
+          <button (click)="performIncrementalBackup(0)"
+                  class="mt-3 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                  [disabled]="isOperationLoading">
+            <fa-icon [icon]="faSync" class="mr-2"></fa-icon>
+            Start Level 0
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <h3 class="text-lg font-medium text-gray-900">Level 1 Backup</h3>
+          <button (click)="performIncrementalBackup(1)"
+                  class="mt-3 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  [disabled]="isOperationLoading">
+            <fa-icon [icon]="faHistory" class="mr-2"></fa-icon>
+            Start Level 1
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <h3 class="text-lg font-medium text-gray-900">Restore</h3>
+          <button (click)="performRestore()"
+                  class="mt-3 w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                  [disabled]="isOperationLoading">
+            <fa-icon [icon]="faRedo" class="mr-2"></fa-icon>
+            Start Restore
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+      <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <dt class="text-sm font-medium text-gray-500 truncate">Full Backups</dt>
+          <dd class="mt-1 text-3xl font-semibold text-gray-900">{{backupStats.fullBackups}}</dd>
+        </div>
+      </div>
+      <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <dt class="text-sm font-medium text-gray-500 truncate">Incremental</dt>
+          <dd class="mt-1 text-3xl font-semibold text-gray-900">{{backupStats.incrementalBackups}}</dd>
+        </div>
+      </div>
+      <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <dt class="text-sm font-medium text-gray-500 truncate">Restores</dt>
+          <dd class="mt-1 text-3xl font-semibold text-gray-900">{{backupStats.restores}}</dd>
+        </div>
+      </div>
+      <div class="bg-white overflow-hidden shadow-sm rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+          <dt class="text-sm font-medium text-gray-500 truncate">Failed</dt>
+          <dd class="mt-1 text-3xl font-semibold text-gray-900">{{backupStats.failedBackups}}</dd>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backup History Table -->
+    <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+      <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
+        <h3 class="text-lg font-medium leading-6 text-gray-900">Backup History</h3>
+      </div>
+      <div class="px-4 py-3 flex flex-wrap justify-between items-center border-b border-gray-200">
+        <div class="w-full sm:w-auto mb-3 sm:mb-0">
+          <div class="relative rounded-md shadow-sm">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <fa-icon [icon]="faSearch" class="text-gray-400"></fa-icon>
+            </div>
+            <input
+              type="text"
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearch($event)"
+              placeholder="Search backups..."
+              class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+            >
+          </div>
+        </div>
+        <div class="flex items-center">
+          <label for="pageSize" class="mr-2 text-sm font-medium text-gray-700">Show:</label>
+          <select
+            id="pageSize"
+            [(ngModel)]="pageSize"
+            (ngModelChange)="onPageSizeChange($event)"
+            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          >
+            <option [value]="5">5</option>
+            <option [value]="20">20</option>
+            <option [value]="30">30</option>
+            <option [value]="40">40</option>
+          </select>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Backup Date</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Restore Date</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+          </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let backup of filteredBackups">
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ backup.id }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <span [ngClass]="{
+                  'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full': true,
+                  'bg-blue-100 text-blue-800': backup.type === 'FULL',
+                  'bg-purple-100 text-purple-800': backup.type === 'INCREMENTAL',
+                  'bg-green-100 text-green-800': backup.type === 'RESTORE'
+                }">
+                  {{ backup.type }}
+                </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <span [ngClass]="{
+                  'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full': true,
+                  'bg-green-100 text-green-800': backup.status === 'SUCCESS',
+                  'bg-yellow-100 text-yellow-800': backup.status === 'In Progress',
+                  'bg-red-100 text-red-800': backup.status === 'Failed'
+                }">
+                  {{ backup.status }}
+                </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ backup.backupDate | date:'medium' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ backup.restoreDate | date:'medium' }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ backup.backupLocation }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
+        <div class="flex-1 flex justify-between sm:hidden">
+          <button (click)="previousPage()" [disabled]="currentPage === 1" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Previous
+          </button>
+          <button (click)="nextPage()" [disabled]="currentPage * pageSize >= totalItems" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            Next
+          </button>
+        </div>
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+          <div>
+            <p class="text-sm text-gray-700">
+              Showing
+              <span class="font-medium">{{ (currentPage - 1) * pageSize + 1 }}</span>
+              to
+              <span class="font-medium">{{ Math.min(currentPage * pageSize, totalItems) }}</span>
+              of
+              <span class="font-medium">{{ totalItems }}</span>
+              results
+            </p>
+          </div>
+          <div>
+            <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+              <button (click)="previousPage()" [disabled]="currentPage === 1" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Previous</span>
+                <fa-icon [icon]="faChevronLeft" class="h-5 w-5"></fa-icon>
+              </button>
+              <button (click)="nextPage()" [disabled]="currentPage * pageSize >= totalItems" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                <span class="sr-only">Next</span>
+                <fa-icon [icon]="faChevronRight" class="h-5 w-5"></fa-icon>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+

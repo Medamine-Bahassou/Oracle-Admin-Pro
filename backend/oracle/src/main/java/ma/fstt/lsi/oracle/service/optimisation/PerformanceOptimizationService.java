@@ -7,7 +7,6 @@ import ma.fstt.lsi.oracle.dao.SlowQueryRepository;
 import ma.fstt.lsi.oracle.dao.StatisticsJobRepository;
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +20,7 @@ import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @RequiredArgsConstructor
@@ -75,85 +75,105 @@ public class PerformanceOptimizationService {
     @Transactional
     public SlowQuery optimizeQuery(Long queryId) {
         SlowQuery query = slowQueryRepository.findById(queryId)
-                .orElseThrow(() -> new RuntimeException("Query not found"));
+                .orElseThrow(() -> new RuntimeException("Query not found with id: " + queryId));
 
-        String recommendations = null;
+        AtomicReference<String> recommendations = new AtomicReference<>();
 
         try {
-            recommendations = jdbcTemplate.execute((ConnectionCallback<String>) connection -> {
-                try (CallableStatement dropTask = connection.prepareCall(
-                        "BEGIN " +
-                                "  BEGIN " +
-                                "    DBMS_SQLTUNE.DROP_TUNING_TASK('TUNE_' || ?);" +
-                                "  EXCEPTION " +
-                                "    WHEN OTHERS THEN NULL;" +
-                                "  END;" +
-                                "END;"
-                )) {
-                    dropTask.setString(1, query.getSqlId());
-                    dropTask.execute();
-                }
+            recommendations.set(jdbcTemplate.execute((ConnectionCallback<String>) connection -> {
+                try {
+                    try (CallableStatement dropTask = connection.prepareCall(
+                            """
+                                    BEGIN 
+                                      BEGIN 
+                                        DBMS_SQLTUNE.DROP_TUNING_TASK('TUNE_' || ?);
+                                      EXCEPTION 
+                                        WHEN OTHERS THEN 
+                                          NULL;  -- Ignore errors when dropping task 
+                                      END;
+                                    END;
+                                    """
+                    )) {
+                        dropTask.setString(1, query.getSqlId());
+                        dropTask.execute();
+                    }
 
-                // Create tuning task with correct parameters
-                try (CallableStatement createTask = connection.prepareCall(
-                        "DECLARE " +
-                                "  l_sql_tune_task_id VARCHAR2(100);" +
-                                "BEGIN " +
-                                "  l_sql_tune_task_id := DBMS_SQLTUNE.CREATE_TUNING_TASK(" +
-                                "    sql_id => ?, " +
-                                "    task_name => 'TUNE_' || ?, " +
-                                "    time_limit => 3600" +
-                                "  );" +
-                                "END;"
-                )) {
-                    createTask.setString(1, query.getSqlId());
-                    createTask.setString(2, query.getSqlId());
-                    createTask.execute();
-                }
+                    // Create tuning task with correct parameters
+                    try (CallableStatement createTask = connection.prepareCall(
+                            """
+                                     DECLARE 
+                                      l_sql_tune_task_id VARCHAR2(100);
+                                    BEGIN 
+                                      l_sql_tune_task_id := DBMS_SQLTUNE.CREATE_TUNING_TASK(
+                                        sql_id => ?, 
+                                        task_name => 'TUNE_' || ?, 
+                                        time_limit => 3600
+                                      );
+                                    END;
+                                    """
+                    )) {
+                        createTask.setString(1, query.getSqlId());
+                        createTask.setString(2, query.getSqlId());
+                        createTask.execute();
+                    }
 
-                // Execute tuning task
-                try (CallableStatement executeTask = connection.prepareCall(
-                        "BEGIN " +
-                                "  DBMS_SQLTUNE.EXECUTE_TUNING_TASK(" +
-                                "    task_name => 'TUNE_' || ?" +
-                                ");" +
-                                "END;"
-                )) {
-                    executeTask.setString(1, query.getSqlId());
-                    executeTask.execute();
-                }
+                    // Execute tuning task
+                    try (CallableStatement executeTask = connection.prepareCall(
+                            """
+                                    BEGIN 
+                                      DBMS_SQLTUNE.EXECUTE_TUNING_TASK(
+                                        task_name => 'TUNE_' || ?
+                                      );
+                                    END;
+                                    """
+                    )) {
+                        executeTask.setString(1, query.getSqlId());
+                        executeTask.execute();
+                    }
 
-                // Retrieve recommendations
-                try (CallableStatement getRecommendations = connection.prepareCall(
-                        "BEGIN " +
-                                "  ? := DBMS_SQLTUNE.REPORT_TUNING_TASK(" +
-                                "    task_name => 'TUNE_' || ?, " +
-                                "    type => 'TEXT', " +
-                                "    level => 'TYPICAL'" +
-                                ");" +
-                                "END;"
-                )) {
-                    getRecommendations.registerOutParameter(1, Types.CLOB);
-                    getRecommendations.setString(2, query.getSqlId());
-                    getRecommendations.execute();
+                    // Retrieve recommendations
+                    try (CallableStatement getRecommendations = connection.prepareCall(
+                            """
+                                     BEGIN 
+                                      ? := DBMS_SQLTUNE.REPORT_TUNING_TASK(
+                                        task_name => 'TUNE_' || ?, 
+                                        type => 'TEXT', 
+                                        level => 'TYPICAL'
+                                      );
+                                    END;
+                                    """
+                    )) {
+                        getRecommendations.registerOutParameter(1, Types.CLOB);
+                        getRecommendations.setString(2, query.getSqlId());
+                        getRecommendations.execute();
 
-                    Clob clob = getRecommendations.getClob(1);
-                    return clob != null ? clob.getSubString(1, (int) clob.length()) : null;
+                        Clob clob = getRecommendations.getClob(1);
+                        if (clob != null) {
+                            recommendations.set(clob.getSubString(1, (int) clob.length()));
+                        } else {
+                            recommendations.set(null);
+                        }
+                    }
+                    return String.valueOf(recommendations);
+                } catch (SQLException e) {
+                    logger.error("SQL exception during tuning for SQL ID: " + query.getSqlId() + ". " + e.getMessage(), e);
+                    throw e;
                 }
-            });
+            }));
 
             logger.info("Optimization recommendations for query " + query.getSqlId() + ": " + recommendations);
 
         } catch (Exception e) {
-            logger.error("Unexpected error during tuning for SQL ID: " + query.getSqlId(), e);
+            logger.error("Unexpected error during tuning for SQL ID: " + query.getSqlId() + ". " + e.getMessage(), e);
             throw new RuntimeException("Unexpected error during tuning: " + e.getMessage(), e);
         }
 
-        query.setOptimizationRecommendations(recommendations);
+        query.setOptimizationRecommendations(String.valueOf(recommendations));
         query.setStatus("OPTIMIZED");
 
         return slowQueryRepository.save(query);
     }
+
 
     @Transactional
     public StatisticsJob scheduleStatisticsGathering(StatisticsJob job) {
@@ -303,10 +323,13 @@ public class PerformanceOptimizationService {
                     gatherStatistics(job);
                     job.setLastRun(LocalDateTime.now());
                     job.setNextRun(calculateNextRun(job.getScheduleExpression()));
-                    job.setStatus("SUCCESS");
+                    if(job.getStatus() != null && !job.getStatus().startsWith("FAILED:"))
+                        job.setStatus("SUCCESS");
+
                 } catch (Exception e) {
-                    job.setStatus("FAILED: " + e.getMessage());
-                    logger.error("Error gathering statistics for job: " + job.getId(), e);
+                    // Log and the top level message, not the stacktrace, since the gatherStatistics method is no longer throwing an exception.
+                    logger.error("Error gathering statistics for job: " + job.getId() + " " + e.getMessage());
+
                 }
                 statisticsJobRepository.save(job);
             }
@@ -318,19 +341,22 @@ public class PerformanceOptimizationService {
     }
 
     private void gatherStatistics(StatisticsJob job) {
-        String sql = """
-            BEGIN
-                DBMS_STATS.GATHER_TABLE_STATS(
-                    ownname => USER,
-                    tabname => ?,
-                    estimate_percent => 100,
-                    method_opt => 'FOR ALL COLUMNS SIZE AUTO',
-                    cascade => TRUE
-                );
-            END;
-        """;
+        String sql;
 
-        if ("INDEX".equals(job.getObjectType())) {
+        if ("TABLE".equalsIgnoreCase(job.getObjectType())) {
+            sql = """
+                BEGIN
+                    DBMS_STATS.GATHER_TABLE_STATS(
+                        ownname => USER,
+                        tabname => ?,
+                        estimate_percent => 100,
+                        method_opt => 'FOR ALL COLUMNS SIZE AUTO',
+                        cascade => TRUE
+                    );
+                END;
+            """;
+
+        } else if ("INDEX".equalsIgnoreCase(job.getObjectType())) {
             sql = """
                 BEGIN
                     DBMS_STATS.GATHER_INDEX_STATS(
@@ -340,9 +366,18 @@ public class PerformanceOptimizationService {
                     );
                 END;
             """;
+        } else {
+            //Should never hit here since the StatisticsJob validation logic is done in the scheduleStatisticsGathering method
+            throw new IllegalArgumentException("Invalid object type for statistics gathering");
         }
 
-        jdbcTemplate.update(sql, job.getObjectName());
-    }
 
+        try {
+            jdbcTemplate.update(sql, job.getObjectName());
+        } catch (Exception e) {
+            //  Store only the top level message, not the entire stacktrace
+            job.setStatus("FAILED: " + e.getMessage());
+            logger.error("Error during statistics gathering for job: " + job.getId() + " " + e.getMessage());
+        }
+    }
 }

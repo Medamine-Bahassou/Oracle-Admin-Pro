@@ -27,4 +27,12 @@ public class BackupHistory {
     private String backupLocation;
 
     private LocalDateTime restoreDate;
+
+    public BackupHistory(String type, String status, LocalDateTime backupDate, String backupLocation) {
+        this.type = type;
+        this.status = status;
+        this.backupDate = backupDate;
+        this.backupLocation = backupLocation;
+        this.restoreDate = null;  // You can set the restore date when the restore process happens
+    }
 }

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/roles")
-@CrossOrigin(origins = "*")
 public class RoleController {
 
     private final RoleService roleService;
@@ -27,10 +26,20 @@ public class RoleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createRoleWithPrivileges(@RequestBody RoleRequest request) {
+    public ResponseEntity<?> createRole(@RequestBody RoleRequest request) {
         try {
-            roleService.createRoleWithPrivileges(request.getRoleName(), request.getPrivileges());
-            return ResponseEntity.ok("Role " + request.getRoleName() + " created with privileges successfully.");
+            roleService.createRole(request.getRoleName());
+            return ResponseEntity.ok("Role " + request.getRoleName() + " created successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/grantPrivileges")
+    public ResponseEntity<?> grantPrivilegesToRole(@RequestBody RoleRequest request) {
+        try {
+            roleService.grantPrivilegesToRole(request.getRoleName(), request.getPrivileges());
+            return ResponseEntity.ok("Privileges granted to role " + request.getRoleName() + " successfully.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -66,10 +75,10 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/user/{username}")
-    public ResponseEntity<?> getUserRoles(@PathVariable String username) {
+    @GetMapping("/{username}")
+    public ResponseEntity<?> getUserPrivileges(@PathVariable String username) {
         try {
-            return ResponseEntity.ok(roleService.getUserRoles(username));
+            return ResponseEntity.ok(roleService.getUserPrivileges(username));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -79,6 +88,14 @@ public class RoleController {
     public ResponseEntity<?> getRolePrivileges(@PathVariable String roleName) {
         try {
             return ResponseEntity.ok(roleService.getRolePrivileges(roleName));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/{username}/roles")
+    public ResponseEntity<?> getUserRoles(@PathVariable String username) {
+        try {
+            return ResponseEntity.ok(roleService.getUserRoles(username));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

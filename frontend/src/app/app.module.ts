@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import {BackupComponent} from './components/backup/backup.component';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {BaseChartDirective} from 'ng2-charts';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -24,6 +27,10 @@ import {FormsModule} from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BackupComponent,
+    HttpClientModule,
+    FontAwesomeModule,
+
     BaseChartDirective,
     HttpClientModule,
     FormsModule

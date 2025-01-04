@@ -12,6 +12,7 @@ import {FormsModule} from '@angular/forms';
     NgForOf,
     FormsModule
   ],
+  standalone: true,
   styleUrls: ['./table-management-component.component.scss']
 })
 export class TableManagementComponent implements OnInit {

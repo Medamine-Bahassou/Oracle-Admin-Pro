@@ -6,16 +6,12 @@ import { AppComponent } from './app.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { BackupComponent } from './components/backup/backup.component';
-import { HttpClientModule } from '@angular/common/http';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   TableManagementComponent,
@@ -28,7 +24,6 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {BaseChartDirective} from 'ng2-charts';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import {HttpClientModule} from '@angular/common/http';
 import { UsersComponent } from './components/users/users.component';
 import {FormsModule} from '@angular/forms';
 import { SlowQueriesComponent } from './components/optimisation/slow-queries/slow-queries.component';
@@ -60,11 +55,10 @@ import { ScheduleStatisticsComponent } from './components/optimisation/schedule-
     MatIconModule,
     MatSnackBarModule,
     MatInputModule,
-    TableManagementComponent
+    TableManagementComponent,
 
 
     BaseChartDirective,
-    HttpClientModule,
     FormsModule
   ],
   providers: [], // Add SecurityService here

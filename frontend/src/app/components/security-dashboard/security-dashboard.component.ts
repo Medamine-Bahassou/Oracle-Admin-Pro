@@ -7,7 +7,8 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-security-dashboard',
   templateUrl: './security-dashboard.component.html',
-  imports: [ FormsModule, NgForOf],
+  imports: [FormsModule, NgForOf],
+  standalone: true,
   styleUrls: ['./security-dashboard.component.scss']
 })
 export class SecurityComponent implements OnInit {

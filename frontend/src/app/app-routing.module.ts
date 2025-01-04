@@ -7,6 +7,9 @@ import {BackupComponent} from './components/backup/backup.component';
 
 import {TableManagementComponent} from './components/table-management-component/table-management-component.component';
 import {SecurityComponent} from './components/security-dashboard/security-dashboard.component';
+import {UsersComponent} from './components/users/users.component';
+import {SlowQueriesComponent} from './components/optimisation/slow-queries/slow-queries.component';
+import {ScheduleStatisticsComponent} from './components/optimisation/schedule-statistics/schedule-statistics.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' }, // Default route
@@ -22,6 +25,11 @@ const routes: Routes = [
       { path: 'backup', component: BackupComponent },
       { path: 'security', component: SecurityComponent },
       { path: 'table', component: TableManagementComponent },// Overview page
+      { path: 'backup', component: BackupComponent },// Overview page
+      { path: 'dashboard', component: DashboardComponent }, // Dashboard page
+      { path: 'users', component: UsersComponent },
+      { path: 'slow', component: SlowQueriesComponent },
+      { path: 'schedule', component: ScheduleStatisticsComponent },
     ]
   },
 

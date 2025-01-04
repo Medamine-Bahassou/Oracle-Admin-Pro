@@ -27,10 +27,20 @@ public class RoleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createRoleWithPrivileges(@RequestBody RoleRequest request) {
+    public ResponseEntity<?> createRole(@RequestBody RoleRequest request) {
         try {
-            roleService.createRoleWithPrivileges(request.getRoleName(), request.getPrivileges());
-            return ResponseEntity.ok("Role " + request.getRoleName() + " created with privileges successfully.");
+            roleService.createRole(request.getRoleName());
+            return ResponseEntity.ok("Role " + request.getRoleName() + " created successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/grantPrivileges")
+    public ResponseEntity<?> grantPrivilegesToRole(@RequestBody RoleRequest request) {
+        try {
+            roleService.grantPrivilegesToRole(request.getRoleName(), request.getPrivileges());
+            return ResponseEntity.ok("Privileges granted to role " + request.getRoleName() + " successfully.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -66,7 +76,7 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/user/{username}")
+    @GetMapping("/{username}")
     public ResponseEntity<?> getUserRoles(@PathVariable String username) {
         try {
             return ResponseEntity.ok(roleService.getUserRoles(username));

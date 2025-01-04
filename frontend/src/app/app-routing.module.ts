@@ -5,6 +5,8 @@ import {AdminComponent} from './components/admin/admin.component';
 import {LandingComponent} from './components/landing/landing.component';
 import {BackupComponent} from './components/backup/backup.component';
 
+import {UsersComponent} from './components/users/users.component';
+
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' }, // Default route
   { path: 'landing', component: LandingComponent }, // Overview page
@@ -17,6 +19,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Default child route
       { path: 'dashboard', component: DashboardComponent },
       { path: 'backup', component: BackupComponent },// Overview page
+      { path: 'dashboard', component: DashboardComponent }, // Dashboard page
+      { path: 'users', component: UsersComponent },
     ]
   },
 

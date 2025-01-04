@@ -13,6 +13,8 @@ public class DataSourceConfig {
     @Bean
     public DataSource dataSource() {
         HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:oracle:thin:@//localhost:1521/ORCL");
+        config.setUsername("C##USER");
         config.setJdbcUrl("jdbc:oracle:thin:@localhost:1522:orcl1");
         config.setUsername("sys");
         config.setPassword("password");
@@ -20,6 +22,7 @@ public class DataSourceConfig {
         Properties properties = new Properties();
         properties.setProperty("internal_logon","sysdba");
         config.setDataSourceProperties(properties);
+
 
         // Pool Configuration
         config.setMaximumPoolSize(10);

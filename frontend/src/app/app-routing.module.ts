@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {AdminComponent} from './components/admin/admin.component';
 import {LandingComponent} from './components/landing/landing.component';
+import {BackupComponent} from './components/backup/backup.component';
+
 import {UsersComponent} from './components/users/users.component';
 import {SlowQueriesComponent} from './components/optimisation/slow-queries/slow-queries.component';
 import {ScheduleStatisticsComponent} from './components/optimisation/schedule-statistics/schedule-statistics.component';
@@ -17,6 +19,8 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Default child route
+      { path: 'dashboard', component: DashboardComponent },
+      { path: 'backup', component: BackupComponent },// Overview page
       { path: 'dashboard', component: DashboardComponent }, // Dashboard page
       { path: 'users', component: UsersComponent },
       { path: 'slow', component: SlowQueriesComponent },

@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="727ca132-605f-4d5f-9e93-c988b0484c3b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/TableManagementController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/dao/TableInfoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/dto/TableRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/model/TableInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/service/TableManagementService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/model/table.interface.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/SecurityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/oracle/src/main/java/ma/fstt/lsi/oracle/controller/SecurityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/admin/admin.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/components/admin/admin.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/components/backup/backup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/components/backup/backup.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles.scss" afterDir="false" />
-    </list>
+    <list default="true" id="727ca132-605f-4d5f-9e93-c988b0484c3b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -253,7 +237,6 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/frontend/src/app/components/table-management-component/table-management-component.component.spec.ts</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

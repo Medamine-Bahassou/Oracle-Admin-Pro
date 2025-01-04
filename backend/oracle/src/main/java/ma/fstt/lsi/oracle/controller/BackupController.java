@@ -28,7 +28,7 @@ public class BackupController {
 
     @PostMapping("/incremental")
     public ResponseEntity<String> performIncrementalBackup(@RequestParam int level) {
-        String result = rmanService.performIncrementalBackup(level); 
+        String result = rmanService.performIncrementalBackup(level);
         return ResponseEntity.ok(result);
     }
 

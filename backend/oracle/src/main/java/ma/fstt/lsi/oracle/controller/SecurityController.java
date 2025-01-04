@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/security")
+@CrossOrigin(origins = "*")
 public class SecurityController {
     @Autowired
     private DatabaseSecurityService securityService;

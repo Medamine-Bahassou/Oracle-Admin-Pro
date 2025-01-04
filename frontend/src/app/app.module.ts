@@ -11,7 +11,6 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {BaseChartDirective} from 'ng2-charts';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import {HttpClientModule} from '@angular/common/http';
 import { UsersComponent } from './components/users/users.component';
 import {FormsModule} from '@angular/forms';
 import { SlowQueriesComponent } from './components/optimisation/slow-queries/slow-queries.component';
@@ -34,9 +33,7 @@ import { ScheduleStatisticsComponent } from './components/optimisation/schedule-
     BackupComponent,
     HttpClientModule,
     FontAwesomeModule,
-
     BaseChartDirective,
-    HttpClientModule,
     FormsModule
   ],
   providers: [],

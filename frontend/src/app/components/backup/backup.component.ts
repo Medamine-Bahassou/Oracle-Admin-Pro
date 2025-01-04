@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 
-import { DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { DatePipe, NgClass, NgForOf } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import {
@@ -23,7 +23,8 @@ import {FormsModule} from '@angular/forms';
 @Component({
   selector: 'app-backup',
   templateUrl: './backup.component.html',
-  imports: [NgForOf, NgClass, NgIf, DatePipe, FontAwesomeModule, FormsModule],
+  imports: [NgForOf, NgClass, DatePipe, FontAwesomeModule, FormsModule],
+  standalone: true,
   styleUrls: ['./backup.component.scss']
 })
 export class BackupComponent implements OnInit {
@@ -31,7 +32,7 @@ export class BackupComponent implements OnInit {
   isLoading = true;
   isOperationLoading = false;
   error: string | null = null;
-  result: string = '';
+  result: null | string = '';
   backupStats = {
     fullBackups: 0,
     incrementalBackups: 0,

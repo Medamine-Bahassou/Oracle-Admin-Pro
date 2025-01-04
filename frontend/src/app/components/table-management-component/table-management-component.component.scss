@@ -1,0 +1,39 @@
+.table-container {
+  @apply overflow-x-auto shadow-md sm:rounded-lg;
+}
+
+.custom-table {
+  @apply w-full text-sm text-left text-gray-500;
+}
+
+.custom-table thead {
+  @apply text-xs text-gray-700 uppercase bg-gray-50;
+}
+
+.custom-table th {
+  @apply px-6 py-3;
+}
+
+.custom-table td {
+  @apply px-6 py-4 whitespace-nowrap;
+}
+
+.custom-table tbody tr {
+  @apply bg-white border-b hover:bg-gray-50;
+}
+
+.search-input {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+}
+
+.btn-primary {
+  @apply text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5;
+}
+
+.btn-warning {
+  @apply text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5;
+}
+
+.btn-danger {
+  @apply text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5;
+}

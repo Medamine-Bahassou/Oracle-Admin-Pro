@@ -110,7 +110,7 @@
   </dialog>
 
   <!-- Role Modal  -->
-  <dialog #roleModal id="roleModal" class="modal">
+  <dialog #roleModal id="roleModal" class="modal z-[10]">
     <div class="modal-box">
       <h3 class="text-xl font-bold mb-4">Create New Role</h3>
       <div class="mb-4">
@@ -220,20 +220,45 @@
       <button>close</button>
     </form>
   </dialog>
+
   <!-- Assign Role Modal  -->
-  <dialog #assignRoleModal id="assignRoleModal" class="modal">
+  <dialog #assignRoleModal id="assignRoleModal" class="modal ">
     <div class="modal-box">
       <h3 class="text-xl font-bold mb-4">Roles for User : {{selectedUser.username}}</h3>
-      <div class="mb-4" *ngIf="selectedUser.userRoles && selectedUser.userRoles.length > 0">
-        <label class="block text-gray-700 text-sm font-bold mb-2">Current Roles</label>
-        <div *ngFor="let role of selectedUser.userRoles">
-          <span class="badge badge-ghost mr-1 ">{{ role }}</span>
+      <div class="mb-4 flex">
+        <div class="w-1/2 pr-2">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Current Privileges</label>
+          <div *ngIf="selectedUser.userPrivileges && selectedUser.userPrivileges.length > 0">
+            <div *ngFor="let privilege of selectedUser.userPrivileges">
+              <span class="badge badge-ghost mr-1 ">{{ privilege }}</span>
+            </div>
+          </div>
+          <div *ngIf="!(selectedUser.userPrivileges && selectedUser.userPrivileges.length > 0)">
+            <span class="text-gray-500">No Privileges assigned</span>
+          </div>
+        </div>
+        <div class="w-1/2 pl-2">
+          <label class="block text-gray-700 text-sm font-bold mb-2">Current Roles</label>
+          <div *ngIf="selectedUserRoles && selectedUserRoles.length > 0">
+            <div *ngFor="let role of selectedUserRoles">
+                              <span class="badge badge-secondary mr-1 flex items-center" >
+                                  {{ role.GRANTED_ROLE.replace('C##', '') }}
+                                <button class="btn btn-sm btn-circle btn-ghost ml-1" (click)="revokeRole(selectedUser, role.GRANTED_ROLE)">
+                                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                                  </button>
+                              </span>
+            </div>
+          </div>
+          <div *ngIf="!(selectedUserRoles && selectedUserRoles.length > 0)">
+            <span class="text-gray-500">No Roles assigned</span>
+          </div>
         </div>
       </div>
+
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2"
-        >Select Role</label
-        >
+        <label class="block text-gray-700 text-sm font-bold mb-2">
+          Select Role
+        </label>
         <select class="select select-bordered w-full "
                 [(ngModel)]="selectedUserRole">
           <option value="">Select Role</option>
@@ -266,16 +291,7 @@
         >
           Username
         </th>
-        <th
-          class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-        >
-          Email
-        </th>
-        <th
-          class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-        >
-          Roles
-        </th>
+
         <th
           class="text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
         >
@@ -287,13 +303,10 @@
       <tr *ngFor="let user of users" class="border-b border-gray-200">
         <td class="text-sm">{{ user.id }}</td>
         <td class="text-sm">{{ user.username }}</td>
-        <td class="text-sm">{{ user.email }}</td>
         <td class="text-sm">
           <button (click)="openAssignRoleModal(user)" class="btn btn-sm btn-primary mr-1">
             Roles
           </button>
-        </td>
-        <td class="text-sm">
           <button (click)="openEditModal(user)" class="btn btn-sm btn-warning mr-1">
             Edit
           </button>

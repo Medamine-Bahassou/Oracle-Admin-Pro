@@ -14,7 +14,8 @@ interface User {
   quota: string
   accountLocked: boolean
   selectedRole?: string
-  userRoles?: string[]
+  userPrivileges?: string[]
+  userRoles?: any[]
   email?: string
 }
 
@@ -30,7 +31,9 @@ interface RoleResponseDto {
 interface PrivilegeResponseDto {
   PRIVILEGE: string
 }
-
+interface RoleUserResponseDto {
+  GRANTED_ROLE: string
+}
 interface RoleEdit {
   roleName: string;
   privileges: string;
@@ -55,6 +58,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   showEditRoleModal = false;
   showEditRolePrivilegesModal = false;
   showAssignRoleModal = false;
+  selectedUserRoles:any[]=[];
   selectedUserRole:string="";
   private destroy$ = new Subject<void>();
   @ViewChild('userModal') userModal!: ElementRef;
@@ -72,7 +76,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.getAllUsers().pipe(takeUntil(this.destroy$)).subscribe({
       next: (users) => {
         this.users = users;
-        this.users.forEach(user => this.loadUserRoles(user));
+        this.users.forEach(user => this.loadUserPrivilegesAndRoles(user));
 
       },
       error: (err) => {
@@ -112,21 +116,27 @@ export class UsersComponent implements OnInit, OnDestroy {
       }
     })
   }
-  loadUserRoles(user: User) {
-    const usernameWithPrefix = `c##${user.username.toLowerCase()}`;
-    this.roleService.getUserRoles(usernameWithPrefix).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (userRoles: any) => {
-        user.userRoles = userRoles.map((role: any) => role.GRANTED_ROLE);
-        if (userRoles && userRoles.length > 0) {
-          user.selectedRole = userRoles[0].GRANTED_ROLE;
+  loadUserPrivilegesAndRoles(user: User) {
+    const usernameWithPrefix = `${user.username.toLowerCase()}`;
+
+    forkJoin([
+      this.roleService.getUserPrivileges(usernameWithPrefix),
+      this.roleService.getUserRoles(usernameWithPrefix)
+    ]).pipe(takeUntil(this.destroy$)).subscribe({
+      next: ([userPrivileges, userRoles]) => {
+        user.userPrivileges = userPrivileges.map((privilege: any) => privilege.PRIVILEGE);
+        if (userPrivileges && userPrivileges.length > 0) {
+          user.selectedRole = userPrivileges[0].PRIVILEGE;
         } else {
           user.selectedRole = "";
         }
+        user.userRoles = userRoles;
+        console.log(user.userRoles);
       },
       error: (err) => {
         this.handleError(err)
       }
-    })
+    });
   }
   openCreateModal() {
     this.selectedUser = { username: '', defaultTablespace: '', temporaryTablespace: '', profile: '', quota: '', accountLocked: false };
@@ -138,8 +148,9 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.selectedUser = { ...user };
     this.modalType = 'edit';
     this.userModal.nativeElement.showModal();
-    this.loadUserRoles(user);
+    this.loadUserPrivilegesAndRoles(user);
   }
+
   createUser() {
     this.userService.createUser(this.selectedUser).pipe(takeUntil(this.destroy$)).subscribe({
       next: (user) => {
@@ -196,6 +207,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   openAssignRoleModal(user:User) {
     this.selectedUser = user;
+    this.selectedUserRoles = user.userRoles || [];
     this.showAssignRoleModal = true;
     this.selectedUserRole="";
     this.assignRoleModal.nativeElement.showModal();
@@ -210,13 +222,25 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.roleService.assignRoleToUser(usernameWithPrefix, (this.selectedUserRole || '').trim().toUpperCase()).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.showSuccess('Role assigned successfully');
-        this.loadUserRoles(this.selectedUser);
+        this.loadUserPrivilegesAndRoles(this.selectedUser);
         this.closeAssignRoleModal()
       },
       error: (err) => {
         this.handleError(err);
       }
     });
+  }
+  revokeRole(user:User,role:string) {
+    const usernameWithPrefix = `${user.username.toLowerCase()}`;
+    this.roleService.revokeRoleFromUser(usernameWithPrefix, role).pipe(takeUntil(this.destroy$)).subscribe({
+      next: () => {
+        this.showSuccess('Role revoked successfully');
+        this.loadUserPrivilegesAndRoles(user);
+      },
+      error: (err) => {
+        this.handleError(err)
+      }
+    })
   }
 
   openCreateRoleModal() {
@@ -251,8 +275,13 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.roleService.createRole(this.newRole.roleName).pipe(takeUntil(this.destroy$)).subscribe({
       next: () => {
         this.showSuccess('Role created successfully');
+        // Immediately open the edit role privileges modal
+        this.selectedRoleToEdit = { roleName: this.newRole.roleName.toLowerCase(), privileges: '' };
+        this.showEditRolePrivilegesModal = true;
+        this.editRolePrivilegeModal.nativeElement.showModal();
         this.loadRoles();
         this.closeRoleModal();
+
       },
       error: (err) => {
         this.handleError(err);
@@ -270,18 +299,6 @@ export class UsersComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         this.handleError(err);
-      }
-    })
-  }
-  revokeRoleFromUser(user: User, role: string) {
-    const usernameWithPrefix = `c##${user.username.toLowerCase()}`;
-    this.roleService.revokeRoleFromUser(usernameWithPrefix, role).pipe(takeUntil(this.destroy$)).subscribe({
-      next: () => {
-        this.showSuccess('Role revoked successfully');
-        this.loadUserRoles(user);
-      },
-      error: (err) => {
-        this.handleError(err)
       }
     })
   }

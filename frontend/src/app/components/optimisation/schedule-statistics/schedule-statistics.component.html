@@ -12,42 +12,47 @@
 
   <form (ngSubmit)="onSubmit()" class="space-y-4">
 
-    <div class="form-control">
+    <div class="form-control w-full">
       <label for="objectName" class="label">
         <span class="label-text">Object Name</span>
       </label>
-      <input type="text" id="objectName" class="input input-bordered w-full" [(ngModel)]="job.objectName" name="objectName" required>
+      <input type="text" id="objectName" class="input input-bordered w-full" [(ngModel)]="job.objectName"
+             name="objectName" required>
     </div>
 
-    <div class="form-control">
+    <div class="form-control w-full">
       <label for="objectType" class="label">
         <span class="label-text">Object Type</span>
       </label>
-      <select id="objectType" class="select select-bordered w-full" [(ngModel)]="job.objectType" name="objectType" required>
+      <select id="objectType" class="select select-bordered w-full" [(ngModel)]="job.objectType"
+              name="objectType" required>
         <option value="TABLE">TABLE</option>
         <option value="INDEX">INDEX</option>
       </select>
     </div>
 
-    <div class="form-control">
+    <div class="form-control w-full">
       <label for="scheduleExpression" class="label">
         <span class="label-text">Schedule Expression (Cron)</span>
       </label>
-      <input type="text" id="scheduleExpression" class="input input-bordered w-full" [(ngModel)]="job.scheduleExpression"
+      <input type="text" id="scheduleExpression" class="input input-bordered w-full"
+             [(ngModel)]="job.scheduleExpression"
              name="scheduleExpression" required>
     </div>
 
     <button type="submit" class="btn btn-primary">Schedule Job</button>
   </form>
 
-  <div *ngIf="scheduledJob" class="mt-4 p-4 bg-gray-100 rounded shadow">
-    <h3 class="text-lg font-semibold mb-2">Scheduled Job Details</h3>
-    <p><strong>Object Name:</strong> {{ scheduledJob.objectName }}</p>
-    <p><strong>Object Type:</strong> {{ scheduledJob.objectType }}</p>
-    <p><strong>Schedule Expression:</strong> {{ scheduledJob.scheduleExpression }}</p>
-    <p><strong>Last Run:</strong> {{ scheduledJob.lastRun | date:'medium' }}</p>
-    <p><strong>Next Run:</strong> {{ scheduledJob.nextRun | date:'medium' }}</p>
-    <p><strong>Status:</strong> {{ scheduledJob.status }}</p>
-    <p><strong>Created At:</strong> {{ scheduledJob.createdAt | date:'medium'}}</p>
+  <div *ngIf="scheduledJob" class="card mt-4 bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h3 class="card-title">Scheduled Job Details</h3>
+      <p><strong>Object Name:</strong> {{ scheduledJob.objectName }}</p>
+      <p><strong>Object Type:</strong> {{ scheduledJob.objectType }}</p>
+      <p><strong>Schedule Expression:</strong> {{ scheduledJob.scheduleExpression }}</p>
+      <p><strong>Last Run:</strong> {{ scheduledJob.lastRun | date:'medium' }}</p>
+      <p><strong>Next Run:</strong> {{ scheduledJob.nextRun | date:'medium' }}</p>
+      <p><strong>Status:</strong> {{ scheduledJob.status }}</p>
+      <p><strong>Created At:</strong> {{ scheduledJob.createdAt | date:'medium'}}</p>
+    </div>
   </div>
 </div>

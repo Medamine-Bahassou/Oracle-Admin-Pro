@@ -31,11 +31,26 @@
         <td>{{ query.captureTime | date: 'medium' }}</td>
         <td>{{ query.status }}</td>
         <td>
-          <button *ngIf="query.status !== 'OPTIMIZED'" class="btn btn-primary btn-sm" (click)="optimizeQuery(query.id)">Optimize</button>
+          <button *ngIf="query.status !== 'OPTIMIZED'" class="btn btn-primary btn-sm"
+                  (click)="optimizeQuery(query.id)">Optimize
+          </button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
   <p *ngIf="!loading && !error && slowQueries.length === 0" class="mt-4 text-gray-600">No slow queries found.</p>
+
+  <!-- Modal using DaisyUI -->
+  <div class="modal" [id]="modalId">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">Optimization Recommendations</h3>
+      <div *ngIf="selectedQuery" class="overflow-x-auto">
+        <pre class="whitespace-pre-wrap">{{selectedQuery.optimizationRecommendations}}</pre>
+      </div>
+      <div class="modal-action">
+        <button class="btn" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

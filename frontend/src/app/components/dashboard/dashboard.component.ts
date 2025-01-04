@@ -1,21 +1,23 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Chart, ChartConfiguration, ChartType } from 'chart.js/auto';
-import {PerformanceService} from "../../services/performance/performance.service";
+import { PerformanceService } from '../../services/performance/performance.service';
 import { Subject, takeUntil } from 'rxjs';
-import {AwrService} from "../../services/performance/awr.service";
-import {AshService} from "../../services/performance/ash.service";
+import { AwrService } from '../../services/performance/awr.service';
+import { AshService } from '../../services/performance/ash.service';
 import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-dashboard',
   standalone: false,
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+  styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   cpuChart: any;
   memoryChart: any;
   ioChart: any;
+  awrChart: any;
+  ashChart: any;
   awrReport: any[] = [];
   ashReport: any[] = [];
   private destroy$ = new Subject<void>();
@@ -33,15 +35,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
   pagedAshReport: any[] = [];
   totalPagesAsh: number = 0;
 
-  constructor(private performanceService: PerformanceService, private awrService: AwrService, private ashService: AshService) {}
+  sqlIdFilter: string = '';
+  eventFilter: string = '';
+
+  constructor(
+    private performanceService: PerformanceService,
+    private awrService: AwrService,
+    private ashService: AshService
+  ) {
+  }
 
   ngOnInit() {
     this.createCharts();
     this.fetchMetrics();
     this.fetchAwrReport();
     this.fetchAshReport();
+    this.fetchAwrChartData();
+    this.fetchASHChartData();
+    setInterval(() => {
+      this.fetchMetrics();
+      this.fetchAwrChartData();
+      this.fetchASHChartData();
+    }, 60000);
   }
-
 
   fetchMetrics() {
     this.performanceService.getCurrentMetrics().pipe(takeUntil(this.destroy$)).subscribe({
@@ -53,6 +69,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   fetchAwrReport() {
     this.awrService.getAWRReport().pipe(takeUntil(this.destroy$)).subscribe({
         next: (data) => {
@@ -64,8 +81,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           console.error('Error fetching AWR Report', err);
         }
       }
-
-    )
+    );
   }
 
   fetchAshReport() {
@@ -78,51 +94,40 @@ export class DashboardComponent implements OnInit, OnDestroy {
           console.error('Error fetching ASH Report', err);
         }
       }
-
-    )
+    );
   }
+
+
   createCharts() {
     this.cpuChart = this.createChart('cpuChart', 'CPU Usage');
     this.memoryChart = this.createChart('memoryChart', 'Memory Usage');
     this.ioChart = this.createChart('ioChart', 'IO Usage');
+    this.awrChart = this.createChart('awrChart', 'AWR Report (Elapsed Time)', 'line');
+    this.ashChart = this.createChart('ashChart', 'ASH Report (Event Distribution)', 'pie');
   }
 
-  createChart(canvasId: string, label: string) {
-    const chartConfig: {
+  createChart(canvasId: string, label: string, type: ChartType = 'bar') {
+    const chartConfig: ChartConfiguration = {
+      type: type,
       data: {
-        datasets: {
-          backgroundColor: string;
-          borderColor: string;
-          data: number[];
-          borderWidth: number;
-          label: string
-        }[];
-        labels: string[]
-      };
-      options: { responsive: boolean; scales: { y: { beginAtZero: boolean } } };
-      type: "bar" | "line" | "scatter" | "bubble" | "pie" | "doughnut" | "polarArea" | "radar"
-    } = {
-      type: 'bar' as ChartType,
-      data: {
-        labels: [label],
-        datasets: [
-          {
-            label: label,
-            data: [0], // Start with 0 data
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1
-          }
-        ]
+        labels: type === 'bar' ? [label] : [],
+        datasets: type === 'pie' ? [] : [{
+          label: label,
+          data: [],
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1,
+        }],
       },
       options: {
         responsive: true,
-        scales: {
+        scales: type === 'bar' ? {
           y: {
             beginAtZero: true
           }
-        }
-      }
+        } : {},
+
+      },
     };
     return new Chart(canvasId, chartConfig);
   }
@@ -139,6 +144,70 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.ioChart.data.datasets[0].data = [ioUsage];
     this.ioChart.update();
   }
+  fetchAwrChartData() {
+    this.awrService.getAWRChartData(this.sqlIdFilter).pipe(takeUntil(this.destroy$)).subscribe({
+        next: (data) => {
+          this.updateAWRChart(data);
+        },
+        error: (err) => {
+          console.error('Error fetching AWR chart data:', err);
+        }
+      }
+    );
+  }
+  fetchASHChartData() {
+    this.ashService.getASHChartData(this.eventFilter).pipe(takeUntil(this.destroy$)).subscribe({
+        next: (data) => {
+          console.log('ASH Chart Data:', data); // Log received data
+          this.updateASHChart(data);
+        },
+        error: (err) => {
+          console.error('Error fetching ASH chart data:', err);
+        }
+      }
+    );
+  }
+
+  updateASHChart(data: any) {
+    console.log('Data for ASH chart:', data); // Add log here too
+    const labels = Object.keys(data);
+    const backgroundColors = [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ];
+
+    const dataset = {
+      label: "Event Count",
+      data: Object.values(data),
+      backgroundColor: labels.map((_, index) => backgroundColors[index % backgroundColors.length]),
+      borderColor:  labels.map((_, index) => backgroundColors[index % backgroundColors.length].slice(0, -4) + "1)"),
+      borderWidth: 1,
+    };
+    this.ashChart.data.labels = labels;
+    this.ashChart.data.datasets = [dataset];
+    this.ashChart.update();
+  }
+
+  updateAWRChart(data: any) {
+    const labels = Object.keys(data);
+    const datasets = labels.map((label, index) => ({
+      label: label,
+      data: data[label].map((item:any) => item.elapsedTime),
+      backgroundColor: `rgba(${index*30}, 162, 235, 0.2)`,
+      borderColor: `rgba(${index*30}, 162, 235, 1)`,
+      borderWidth: 1,
+    }));
+    this.awrChart.data.labels =  Array.from({ length: data[Object.keys(data)[0]]?.length || 0 }, (_, i) => `SQL ${i + 1}`);
+    this.awrChart.data.datasets = datasets;
+    this.awrChart.update();
+  }
+
+
 
   downloadAwrReport() {
     this.generateAwrPdf(this.awrReport);
@@ -153,7 +222,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     let yPosition = 10;
     const lineHeight = 7;
     const margin = 10;
-    const pageWidth = pdf.internal.pageSize.getWidth() - 2* margin;
+    const pageWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
     const colWidth = pageWidth / 8;
 
     pdf.setFont('helvetica', 'bold');
@@ -172,15 +241,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
       pdf.text(`Start Time: ${awr.startTime}`, margin, yPosition);
       yPosition += lineHeight;
       pdf.text(`End Time: ${awr.endTime}`, margin, yPosition);
-      yPosition += lineHeight +5;
+      yPosition += lineHeight + 5;
 
       let x = margin;
       pdf.setFont('helvetica', 'bold');
       pdf.setFontSize(8);
-      let headers = ["SQL ID",  "Executions", "Elapsed Time", "CPU Time", "Buffer Gets", "Disk Reads", "Rows Processed", "Plan Hash Value"];
+      let headers = ['SQL ID', 'Executions', 'Elapsed Time', 'CPU Time', 'Buffer Gets', 'Disk Reads', 'Rows Processed', 'Plan Hash Value'];
       for (const header of headers) {
         pdf.rect(x, yPosition, colWidth, lineHeight, 'S'); // Add cell border
-        pdf.text(header, x + 1, yPosition + 5, {maxWidth: colWidth - 2 , lineHeight: 2} as any); // Add some padding
+        pdf.text(header, x + 1, yPosition + 5, {maxWidth: colWidth - 2, lineHeight: 2} as any); // Add some padding
         x += colWidth;
       }
       yPosition += lineHeight;
@@ -191,21 +260,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
         let x = margin;
         let statValues = [stat.sqlId, String(stat.executions), String(stat.elapsedTime), String(stat.cpuTime), String(stat.bufferGets), String(stat.diskReads), String(stat.rowsProcessed), String(stat.planHashValue)];
         for (const statValue of statValues) {
-          if(statValue != null)
+          if (statValue != null)
             pdf.rect(x, yPosition, colWidth, lineHeight, 'S'); // Add cell border
-          pdf.text(String(statValue), x + 1, yPosition + 5, {maxWidth: colWidth - 2 , lineHeight: 2} as any); // Add some padding
+          pdf.text(String(statValue), x + 1, yPosition + 5, {maxWidth: colWidth - 2, lineHeight: 2} as any); // Add some padding
           x += colWidth;
         }
 
         yPosition += lineHeight;
 
-        if(yPosition > pdf.internal.pageSize.getHeight() - 20){
+        if (yPosition > pdf.internal.pageSize.getHeight() - 20) {
           pdf.addPage();
           yPosition = 10;
         }
       }
       yPosition += lineHeight + 5;
-      if(yPosition > pdf.internal.pageSize.getHeight() - 20){
+      if (yPosition > pdf.internal.pageSize.getHeight() - 20) {
         pdf.addPage();
         yPosition = 10;
       }
@@ -213,12 +282,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     pdf.save('awr_report.pdf');
   }
+
   private generateAshPdf(ashReports: any[]): void {
     const pdf = new jsPDF('p', 'mm', 'a4');
     let yPosition = 10;
     const lineHeight = 7;
     const margin = 10;
-    const pageWidth = pdf.internal.pageSize.getWidth() - 2* margin;
+    const pageWidth = pdf.internal.pageSize.getWidth() - 2 * margin;
     const colWidth = pageWidth / 4;
 
     pdf.setFont('helvetica', 'bold');
@@ -228,7 +298,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     let x = margin;
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(10);
-    let headers = ["Session ID", "Event", "Wait Class", "Sample Time"];
+    let headers = ['Session ID', 'Event', 'Wait Class', 'Sample Time'];
     for (const header of headers) {
       pdf.rect(x, yPosition, colWidth, lineHeight, 'S'); // Add cell border
       pdf.text(header, x + 1, yPosition + 5, {maxWidth: colWidth - 2, lineHeight: 2} as any); // Add some padding
@@ -237,24 +307,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
     yPosition += lineHeight;
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(8);
-    for(const ash of ashReports){
+    for (const ash of ashReports) {
       let x = margin;
       let ashValues = [ash.sessionId, ash.event, ash.waitClass, ash.sampleTime];
       for (const ashValue of ashValues) {
-        if(ashValue != null)
+        if (ashValue != null)
           pdf.rect(x, yPosition, colWidth, lineHeight, 'S'); // Add cell border
-        pdf.text(String(ashValue), x + 1, yPosition + 5,{maxWidth: colWidth -2,lineHeight: 2} as any); // Add some padding
+        pdf.text(String(ashValue), x + 1, yPosition + 5, {maxWidth: colWidth - 2, lineHeight: 2} as any); // Add some padding
         x += colWidth;
       }
       yPosition += lineHeight;
 
-      if(yPosition > pdf.internal.pageSize.getHeight() - 20){
+      if (yPosition > pdf.internal.pageSize.getHeight() - 20) {
         pdf.addPage();
         yPosition = 10;
       }
     }
     pdf.save('ash_report.pdf');
   }
+
   formatAwrTableData() {
     this.awrTableData = [];
     for (const awr of this.awrReport) {
@@ -284,7 +355,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
   nextPageAwr() {
-    if(this.currentPageAwr < this.totalPagesAwr -1) {
+    if (this.currentPageAwr < this.totalPagesAwr - 1) {
       this.currentPageAwr++;
       this.setPagedAwrReport();
     }
@@ -307,7 +378,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
   nextPageAsh() {
-    if(this.currentPageAsh < this.totalPagesAsh -1) {
+    if (this.currentPageAsh < this.totalPagesAsh - 1) {
       this.currentPageAsh++;
       this.setPagedAshReport();
     }

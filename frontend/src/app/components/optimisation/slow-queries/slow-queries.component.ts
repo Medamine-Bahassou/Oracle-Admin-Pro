@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PerformanceService} from '../../../services/optimisation/performance.service';
+import { PerformanceService } from '../../../services/optimisation/performance.service';
 
 interface SlowQuery {
   id: number;
@@ -23,6 +23,8 @@ export class SlowQueriesComponent implements OnInit {
   slowQueries: SlowQuery[] = [];
   loading: boolean = false;
   error: string = '';
+  selectedQuery: SlowQuery | null = null;
+  modalId:string = 'my_modal_1'
 
   constructor(private performanceService: PerformanceService) { }
 
@@ -53,7 +55,15 @@ export class SlowQueriesComponent implements OnInit {
         const index = this.slowQueries.findIndex(query => query.id === optimizedQuery.id);
         if(index !== -1) {
           this.slowQueries[index] = optimizedQuery;
+          this.selectedQuery = optimizedQuery;
+          //Trigger the modal by adding the "modal-open" class to the element
+          const modalElement = document.getElementById(this.modalId);
+          if (modalElement) {
+            modalElement.classList.add("modal-open");
+          }
+
         }
+
         this.loading = false;
       },
       error: (err) => {
@@ -61,5 +71,12 @@ export class SlowQueriesComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+  closeModal():void {
+    const modalElement = document.getElementById(this.modalId);
+    if (modalElement) {
+      modalElement.classList.remove("modal-open");
+    }
+    this.selectedQuery = null;
   }
 }

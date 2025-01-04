@@ -31,6 +31,11 @@ public class BackupController {
     }
 
     @GetMapping("/history")
+    public ResponseEntity<List<
+            BackupHistory>> getBackupHistory() {
+        List<BackupHistory> history = rmanService.listBackups();
+        return ResponseEntity.ok(history);
+
     public ResponseEntity<List<BackupHistory>> getBackupHistory() {
         return ResponseEntity.ok(backupService.getBackupHistory());
     }

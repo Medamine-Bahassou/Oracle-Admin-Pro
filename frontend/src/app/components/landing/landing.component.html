@@ -9,7 +9,7 @@
     <div class="navbar-end">
       <ul class="menu menu-horizontal px-1 font-medium">
         <li><a class="hover:text-primary">Home</a></li>
-        <li><a class="hover:text-primary">Profil</a></li>
+        <li><a class="hover:text-primary">Profile</a></li>
         <li><a class="hover:text-primary">About</a></li>
         <li><a class="hover:text-primary">Portfolio</a></li>
         <li><a class="hover:text-primary">Contact</a></li>
@@ -18,10 +18,10 @@
   </div>
 
   <!-- Main Content -->
-  <div class="  mx-auto flex flex-col lg:flex-row py-10 pl-28  justify-between">
+  <div class="  mx-auto flex flex-col lg:flex-row py-10 p-28 justify-evenly">
     <!-- Left Side: Login Form -->
     <div class="lg:w-1/2 flex flex-col justify-center items-start">
-      <h1 class="text-4xl font-bold text-primary mb-8">Welcome</h1>
+      <h1 class="text-4xl font-bold  mb-8">Welcome</h1>
       <div class="w-full">
         <div class="form-control w-full mb-4">
           <label class="label">
@@ -48,12 +48,12 @@
         </div>
         <div class="flex justify-between items-center mb-6">
           <div class="flex items-center">
-            <input type="checkbox" class="checkbox checkbox-primary mr-2" />
+            <input type="checkbox" class="checkbox checkbox-primary  mr-2" />
             <span class="text-sm">Remember</span>
           </div>
-          <a href="#" class="text-sm link link-primary">Forgot Password ?</a>
+          <a href="#" class="text-sm text-black link link-primary">Forgot Password ?</a>
         </div>
-        <button class="btn btn-primary w-full" (click)="login()">Submit</button>
+        <button class="btn hover:bg-black bg-black text-white w-full" (click)="login()">Submit</button>
       </div>
 
     </div>
@@ -61,7 +61,7 @@
     <!-- Right Side: Illustration -->
     <div class="float-end flex justify-end items-center">
       <img
-        src="/banner.jpg"
+        src="/logo_cover.png"
         alt="Login Illustration"
         class="max-w-lg rounded-xl w-full"
       />

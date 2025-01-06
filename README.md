@@ -6,7 +6,7 @@
 
 # Oracle Admin Pro
 
-![Oracle Admin Pro Login](https://github.com/user-attachments/assets/dd2c1ccf-4813-4811-9dfd-8273b01cbf6b)
+![image](https://github.com/user-attachments/assets/7a5b5154-51c8-40ec-931e-d86a6677aa06)
 
 ## Project Overview
 

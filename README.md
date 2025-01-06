@@ -1,132 +1,126 @@
 <div align="center">
   <img src="https://github.com/user-attachments/assets/9b92324b-06ea-4e30-a2cf-4a1644d3e6b4" />
 </div>
- 
-
 
 # Oracle Admin Pro
 
 ![image](https://github.com/user-attachments/assets/7a5b5154-51c8-40ec-931e-d86a6677aa06)
 
-## Project Overview
+## Présentation du Projet
 
-Oracle Admin Pro is a web-based administration application designed to streamline database management tasks for Oracle databases. Built using Java EE (Spring Boot) for the backend and Angular for the frontend, this application aims to provide a user-friendly interface for key administrative operations.
+Oracle Admin Pro est une application d'administration Web conçue pour simplifier les tâches de gestion de base de données pour les bases de données Oracle. Développée en utilisant Java EE (Spring Boot) pour le backend et Angular pour le frontend, cette application vise à fournir une interface conviviale pour les opérations administratives clés.
 
-## Key Features
+## Fonctionnalités Principales
 
-Based on the provided document, the project aims to provide the following functionalities:
+D'après le document fourni, le projet vise à offrir les fonctionnalités suivantes :
 
-*   **User Management:**
-    *   Create, modify, and delete Oracle users.
-    *   Manage user roles and access privileges via a web interface.
-    *   Configure space quotas and password policies.
-*   **Backup and Restore:**
-    *   Initiate full and incremental backups using RMAN directly from the application.
-    *   View backup history and restore options for specific dates.
-    *   Schedule automated backups with customizable plans.
-*   **Data Security:**
-    *   Configure Transparent Data Encryption (TDE) policies.
-    *   Manage Virtual Private Databases (VPD) to control data access.
-    *   Enable security audits.
-*   **Performance Monitoring:**
-    *   Display AWR and ASH reports with graphical visualization (e.g., using Chart.js).
-    *   Real-time dashboard for resource utilization (CPU, I/O, memory).
-*   **Performance Optimization:**
-    *   Interface to identify and optimize slow-running queries with SQL Tuning Advisor.
-    *   Schedule the recalculation of table and index statistics.
-*   **High Availability:**
-    *   Configure and monitor Oracle Data Guard.
-    *   Simulate switchovers and failovers with reports on availability.
+*   **Gestion des Utilisateurs :**
+    *   Créer, modifier et supprimer des utilisateurs Oracle.
+    *   Gérer les rôles d'utilisateur et les privilèges d'accès via une interface web.
+    *   Configurer les quotas d'espace et les politiques de mot de passe.
+*   **Sauvegarde et Restauration :**
+    *   Lancer des sauvegardes complètes et incrémentielles en utilisant RMAN directement depuis l'application.
+    *   Afficher l'historique des sauvegardes et les options de restauration pour des dates spécifiques.
+    *   Planifier des sauvegardes automatisées avec des plans personnalisables.
+*   **Sécurité des Données :**
+    *   Configurer les politiques de Transparent Data Encryption (TDE).
+    *   Gérer les Virtual Private Databases (VPD) pour contrôler l'accès aux données.
+    *   Activer les audits de sécurité.
+*   **Surveillance des Performances :**
+    *   Afficher les rapports AWR et ASH avec visualisation graphique (par exemple, en utilisant Chart.js).
+    *   Tableau de bord en temps réel pour l'utilisation des ressources (CPU, E/S, mémoire).
+*   **Optimisation des Performances :**
+    *   Interface pour identifier et optimiser les requêtes lentes avec SQL Tuning Advisor.
+    *   Planifier le recalcul des statistiques des tables et des index.
+*   **Haute Disponibilité :**
+    *   Configurer et surveiller Oracle Data Guard.
+    *   Simuler des basculements et des restaurations avec des rapports sur la disponibilité.
 
-## Team
+## Équipe
 
 *   **Mohamed Amine BAHASSOU**
 *   **Hodaifa ECHFFANI**
 
-## Supervisor
+## Superviseur
 
 *   **Mohamed BEN AHMED**
 
-## Technologies Used
+## Technologies Utilisées
 
-*   **Database:** Oracle 19c
-*   **Backend:**
+*   **Base de données :** Oracle 19c
+*   **Backend :**
     *   Java EE (Spring Boot)
     *   Hibernate (ORM)
-    *   JDBC (for SQL command execution)
-    *   Spring Security (authentication and session management)
-    *   REST or SOAP (web service implementation)
-*   **Frontend:**
+    *   JDBC (pour l'exécution des commandes SQL)
+    *   Spring Security (authentification et gestion de session)
+    *   REST ou SOAP (implémentation de services web)
+*   **Frontend :**
     *   Angular
-    *   Tailwind CSS (for styling)
-    *   Daisy UI (for UI components)
-    *   Chart.js (for visualizations)
+    *   Tailwind CSS (pour le stylage)
+    *   Daisy UI (pour les composants d'interface utilisateur)
+    *   Chart.js (pour les visualisations)
 
-## Project Structure
+## Structure du Projet
 
-The project is divided into two main parts:
+Le projet est divisé en deux parties principales :
 
-1.  **Backend:** A Spring Boot application responsible for handling database interactions, security, and business logic.
-2.  **Frontend:** An Angular application that provides the user interface for the admin panel.
+1.  **Backend :** Une application Spring Boot responsable de la gestion des interactions avec la base de données, de la sécurité et de la logique métier.
+2.  **Frontend :** Une application Angular qui fournit l'interface utilisateur pour le panneau d'administration.
 
-## Installation and Setup
+## Installation et Configuration
 
-### Prerequisites
+### Prérequis
 
-*   Java Development Kit (JDK) 17 or higher
+*   Java Development Kit (JDK) 17 ou supérieur
 *   Maven
-*   Node.js and npm (for Angular development)
-*   Oracle 19c Database installed and accessible
+*   Node.js et npm (pour le développement Angular)
+*   Base de données Oracle 19c installée et accessible
 
-### Backend Setup (Spring Boot)
+### Configuration du Backend (Spring Boot)
 
-1.  **Clone the repository:**
+1.  **Cloner le dépôt :**
     ```bash
     git clone <repository_url>
     cd oracle-admin-pro/backend
     ```
-2.  **Install Dependencies:**
-    *   The `pom.xml` shows all necessary dependencies; Maven will automatically download them.
-3.  **Configure Database:**
-    *   Update `application.properties` or `application.yml` with your Oracle database connection details.
-4.  **Build and Run:**
+2.  **Installer les dépendances :**
+    *   Le `pom.xml` affiche toutes les dépendances nécessaires ; Maven les téléchargera automatiquement.
+3.  **Configurer la base de données :**
+    *   Mettre à jour `application.properties` ou `application.yml` avec les informations de connexion de votre base de données Oracle.
+4.  **Compiler et exécuter :**
     ```bash
     mvn clean install
     mvn spring-boot:run
     ```
-    The backend server will run on the port defined in `application.properties` or `application.yml`
+    Le serveur backend s'exécutera sur le port défini dans `application.properties` ou `application.yml`.
 
-### Frontend Setup (Angular)
+### Configuration du Frontend (Angular)
 
-1.  **Navigate to the Frontend Directory:**
+1.  **Naviguer vers le répertoire du Frontend :**
     ```bash
     cd ../frontend
     ```
-2. **Install Node Dependencies:**
-      ```bash
-      npm install
-      ```
-3. **Run the Angular App:**
-      ```bash
-      ng serve
-     ```
-     The frontend server will run on port `4200`.
+2.  **Installer les dépendances Node :**
+    ```bash
+    npm install
+    ```
+3.  **Exécuter l'application Angular :**
+    ```bash
+    ng serve
+    ```
+    Le serveur frontend s'exécutera sur le port `4200`.
 
-## Usage
+## Utilisation
 
-1.  Access the application in your web browser using the URL and port of the frontend server (e.g., `http://localhost:4200`).
-2.  Log in with your credentials (currently `admin/admin` in the example).
-3.  Navigate through the admin panel to explore the features.
+1.  Accédez à l'application dans votre navigateur web en utilisant l'URL et le port du serveur frontend (par exemple, `http://localhost:4200`).
+2.  Connectez-vous avec vos identifiants (actuellement `admin/admin` dans l'exemple).
+3.  Naviguez dans le panneau d'administration pour explorer les fonctionnalités.
 
-## Contributing
+## Contribution
 
-If you wish to contribute to the project, please follow these guidelines:
+Si vous souhaitez contribuer au projet, veuillez suivre ces directives :
 
-1.  Fork the repository.
-2.  Create a new branch for your feature or bug fix.
-3.  Commit your changes with clear and descriptive messages.
-4.  Submit a pull request to the main repository.
-
-## License
-
-This project is licensed under the [Specify your license here].
+1.  Forkez le dépôt.
+2.  Créez une nouvelle branche pour votre fonctionnalité ou correction de bug.
+3.  Validez vos modifications avec des messages clairs et descriptifs.
+4.  Soumettez une demande de tirage (pull request) au dépôt principal.

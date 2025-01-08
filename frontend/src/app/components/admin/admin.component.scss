@@ -1,0 +1,85 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 280px;
+  background: #1a237e;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+}
+
+.logo-container {
+  padding: 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+
+  .logo {
+    max-width: 180px;
+  }
+}
+
+.nav-menu {
+  flex: 1;
+  padding: 1rem 0;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    &.active {
+      background-color: rgba(255,255,255,0.15);
+      border-left: 4px solid #fff;
+    }
+
+    fa-icon {
+      font-size: 1.2rem;
+      width: 24px;
+    }
+  }
+}
+
+.logout-container {
+  padding: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+
+  .logout-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #ef5350;
+    text-decoration: none;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: #ef5350;
+      color: white;
+    }
+  }
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 280px;
+  padding: 2rem;
+}

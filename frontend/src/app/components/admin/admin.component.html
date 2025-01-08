@@ -1,61 +1,40 @@
-
-  <aside class="w-64 bg-gray-800 text-white flex flex-col fixed h-full">
-    <div class="p-4 flex items-center justify-center">
-      <img  src="/logo.png" width="200"/>
-    </div>
-    <nav class="flex-grow">
-      <ul>
-        <li routerLink="/admin/dashboard" class="p-4 hover:bg-gray-700 cursor-pointer">
-            <i class="fas fa-tachometer-alt mr-2">
-            </i>
-            Dashboard
-        </li>
-        <li routerLink="/admin/users" class="p-4 hover:bg-gray-700 cursor-pointer">
-          <i class="fas fa-users mr-2">
-          </i>
-          Users
-        </li>
-
-        <li routerLink="/admin/slow" class="p-4 hover:bg-gray-700 cursor-pointer">
-            <i class="fas fa-table mr-2">
-            </i>
-            Slow Queries
-        </li>
-
-        <li routerLink="/admin/schedule" class="p-4 hover:bg-gray-700 cursor-pointer">
-            <i class="fas fa-cogs mr-2">
-            </i>
-            Schedule
-        </li>
-        <li routerLink="/admin/backup" class="p-4 hover:bg-gray-700 cursor-pointer">
-          <i class="fas fa-users mr-2">
-          </i>
-          RMAN
-        </li>
-        <li routerLink="/admin/table" class="p-4 hover:bg-gray-700 cursor-pointer">
-          <i class="fas fa-users mr-2">
-          </i>
-          TABLE
-        </li>
-        <li routerLink="/admin/security" class="p-4 hover:bg-gray-700 cursor-pointer">
-          <i class="fas fa-users mr-2">
-          </i>
-          Security
-        </li>
-
-      </ul>
-    </nav>
-    <div class="">
-      <a class="flex items-center text-red-500 p-4 hover:bg-red-700 hover:text-white cursor-pointer" href="#">
-        <i class="fas fa-sign-out-alt mr-2">
-        </i>
-        Logout
-      </a>
-    </div>
-  </aside>
-  <!-- Main Content -->
-  <div class="p-6 ml-64">
-    <router-outlet/>
+<aside class="w-64 bg-gray-800 text-white flex flex-col fixed h-full">
+  <div class="p-4 flex items-center justify-center">
+    <img src="/logo.png" width="200"/>
   </div>
+  <nav class="flex-grow">
+    <ul>
+      <li routerLink="/admin/dashboard" class="p-4 hover:bg-gray-700 cursor-pointer">
+        <fa-icon [icon]="icons.dashboard" class="mr-2"></fa-icon> Dashboard
+      </li>
+      <li routerLink="/admin/users" class="p-4 hover:bg-gray-700 cursor-pointer">
+        <fa-icon [icon]="icons.users" class="mr-2"></fa-icon> Users
+      </li>
+      <li routerLink="/admin/slow" class="p-4 hover:bg-gray-700 cursor-pointer">
+        <fa-icon [icon]="icons.slowQueries" class="mr-2"></fa-icon> Slow Queries
+      </li>
+      <li routerLink="/admin/schedule" class="p-4 hover:bg-gray-700 cursor-pointer">
+        <fa-icon [icon]="icons.schedule" class="mr-2"></fa-icon> Schedule
+      </li>
+      <li routerLink="/admin/backup" class="p-4 hover:bg-gray-700 cursor-pointer">
+        <fa-icon [icon]="icons.backup" class="mr-2"></fa-icon> RMAN
+      </li>
+      <li routerLink="/admin/table" class="p-4 hover:bg-gray-700 cursor-pointer">
+        <fa-icon [icon]="icons.table" class="mr-2"></fa-icon> TABLE
+      </li>
+      <li routerLink="/admin/security" class="p-4 hover:bg-gray-700 cursor-pointer">
+        <fa-icon [icon]="icons.security" class="mr-2"></fa-icon> Security
+      </li>
+    </ul>
+  </nav>
+  <div>
+    <a class="flex items-center text-red-500 p-4 hover:bg-red-700 hover:text-white cursor-pointer" href="#">
+      <fa-icon [icon]="icons.logout" class="mr-2"></fa-icon> Logout
+    </a>
+  </div>
+</aside>
 
-
+<!-- Main Content -->
+<div class="p-6 ml-64">
+  <router-outlet></router-outlet>
+</div>

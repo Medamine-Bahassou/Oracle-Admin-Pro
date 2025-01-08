@@ -28,6 +28,7 @@ import { UsersComponent } from './components/users/users.component';
 import {FormsModule} from '@angular/forms';
 import { SlowQueriesComponent } from './components/optimisation/slow-queries/slow-queries.component';
 import { ScheduleStatisticsComponent } from './components/optimisation/schedule-statistics/schedule-statistics.component';
+import {NgOptimizedImage} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ScheduleStatisticsComponent } from './components/optimisation/schedule-
 
 
     BaseChartDirective,
-    FormsModule
+    FormsModule,
+    NgOptimizedImage
   ],
   providers: [], // Add SecurityService here
   bootstrap: [AppComponent]

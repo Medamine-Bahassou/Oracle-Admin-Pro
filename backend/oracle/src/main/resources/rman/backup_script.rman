@@ -1,1 +1,14 @@
-BACKUP DATABASE PLUS ARCHIVELOG;
+# Full database backup script
+
+# Connect to the target database (connection string will be passed via CLI)
+# Set backup location if not configured elsewhere
+#CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT '/u01/app/oracle/backup/%U';
+
+# Backup the entire database.
+BACKUP DATABASE;
+
+# Backup all archive logs.
+BACKUP ARCHIVELOG ALL;
+
+# Print confirmation of a successful backup.
+#PRINT 'Full database backup completed successfully.';

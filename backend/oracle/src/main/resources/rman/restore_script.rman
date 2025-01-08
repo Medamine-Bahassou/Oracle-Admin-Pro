@@ -1,8 +1,20 @@
-RUN {
-    SHUTDOWN IMMEDIATE;
-    STARTUP MOUNT;
-    SET NEWNAME FOR DATABASE TO '/backups/complete/%U';
-    RESTORE DATABASE;
-    RECOVER DATABASE;
-    ALTER DATABASE OPEN;
-}
+# Restore and recover database script
+
+# Connect to target database (connection string will be passed via CLI)
+
+# Shut down the database if it's running
+SHUTDOWN IMMEDIATE;
+
+# Startup the instance in mount state.
+STARTUP MOUNT;
+
+# Restore the database from a backup.
+RESTORE DATABASE;
+
+# Recover the database
+RECOVER DATABASE;
+# Optionally open the database with resetlogs if it's a point in time recovery
+#ALTER DATABASE OPEN RESETLOGS;
+
+# Print a message
+#PRINT 'Database restore and recovery completed successfully.';

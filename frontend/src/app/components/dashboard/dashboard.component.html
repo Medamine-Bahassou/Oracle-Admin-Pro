@@ -1,166 +1,278 @@
-<main class="flex-grow p-6  ">
-  <header class="flex items-center justify-between mb-6">
-    <h1 class="text-3xl font-bold text-gray-800">Dashboard</h1>
+<main class="min-h-screen bg-base-100 p-6">
+  <!-- Header -->
+  <header class="flex items-center justify-between mb-6 sm:mb-8 w-full max-w-7xl">
+    <h1 class="text-2xl font-medium text-base-content">
+        Dashboard
+    </h1>
   </header>
 
   <!-- Statistics Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-    <div class="bg-white p-6 rounded-xl shadow-md flex items-center hover:shadow-xl transition duration-300">
-      <div class="p-4 bg-blue-500 text-white rounded-full">
-        <i class="fas fa-database text-xl"></i>
-      </div>
-      <div class="ml-4">
-        <h2 class="text-xl font-semibold text-gray-700">Databases</h2>
-        <p class="text-gray-600 text-lg">15</p>
-      </div>
-    </div>
-    <div class="bg-white p-6 rounded-xl shadow-md flex items-center hover:shadow-xl transition duration-300">
-      <div class="p-4 bg-green-500 text-white rounded-full">
-        <i class="fas fa-table text-xl"></i>
-      </div>
-      <div class="ml-4">
-        <h2 class="text-xl font-semibold text-gray-700">Tables</h2>
-        <p class="text-gray-600 text-lg">120</p>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 sm:mb-8 w-full max-w-7xl"
+  >
+    <div
+      class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300"
+    >
+      <div class="card-body flex flex-row items-center p-3 sm:p-4">
+        <div class="rounded-lg bg-primary/10 p-2 sm:p-3">
+          <i class="fas fa-database text-primary text-lg sm:text-xl"></i>
+        </div>
+        <div class="ml-3 sm:ml-4">
+          <h2 class="card-title text-sm sm:text-base">Databases</h2>
+          <p class="text-xl sm:text-2xl font-semibold text-primary">15</p>
+        </div>
       </div>
     </div>
-    <div class="bg-white p-6 rounded-xl shadow-md flex items-center hover:shadow-xl transition duration-300">
-      <div class="p-4 bg-yellow-500 text-white rounded-full">
-        <i class="fas fa-users text-xl"></i>
-      </div>
-      <div class="ml-4">
-        <h2 class="text-xl font-semibold text-gray-700">Users</h2>
-        <p class="text-gray-600 text-lg">45</p>
+
+    <div
+      class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300"
+    >
+      <div class="card-body flex flex-row items-center p-3 sm:p-4">
+        <div class="rounded-lg bg-success/10 p-2 sm:p-3">
+          <i class="fas fa-table text-success text-lg sm:text-xl"></i>
+        </div>
+        <div class="ml-3 sm:ml-4">
+          <h2 class="card-title text-sm sm:text-base">Tables</h2>
+          <p class="text-xl sm:text-2xl font-semibold text-success">120</p>
+        </div>
       </div>
     </div>
-    <div class="bg-white p-6 rounded-xl shadow-md flex items-center hover:shadow-xl transition duration-300">
-      <div class="p-4 bg-red-500 text-white rounded-full">
-        <i class="fas fa-cogs text-xl"></i>
+
+    <div
+      class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300"
+    >
+      <div class="card-body flex flex-row items-center p-3 sm:p-4">
+        <div class="rounded-lg bg-warning/10 p-2 sm:p-3">
+          <i class="fas fa-users text-warning text-lg sm:text-xl"></i>
+        </div>
+        <div class="ml-3 sm:ml-4">
+          <h2 class="card-title text-sm sm:text-base">Users</h2>
+          <p class="text-xl sm:text-2xl font-semibold text-warning">45</p>
+        </div>
       </div>
-      <div class="ml-4">
-        <h2 class="text-xl font-semibold text-gray-700">Settings</h2>
-        <p class="text-gray-600 text-lg">5</p>
+    </div>
+
+    <div
+      class="card bg-base-100 shadow-lg hover:shadow-xl transition-shadow duration-300"
+    >
+      <div class="card-body flex flex-row items-center p-3 sm:p-4">
+        <div class="rounded-lg bg-error/10 p-2 sm:p-3">
+          <i class="fas fa-cogs text-error text-lg sm:text-xl"></i>
+        </div>
+        <div class="ml-3 sm:ml-4">
+          <h2 class="card-title text-sm sm:text-base">Settings</h2>
+          <p class="text-xl sm:text-2xl font-semibold text-error">5</p>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Performance Charts -->
-  <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-    <h2 class="text-2xl font-bold mb-4 text-gray-800">Performance Dashboard</h2>
-    <div class="flex justify-between items-center mb-4">
-      <div class="flex gap-2">
-        <input type="text" [(ngModel)]="sqlIdFilter" placeholder="Filter by SQL ID" (input)="fetchAwrChartData()" class="input input-bordered input-sm" />
-        <input type="text" [(ngModel)]="eventFilter" placeholder="Filter by Event" (input)="fetchASHChartData()" class="input input-bordered input-sm" />
+  <div class="card bg-base-100 shadow-lg mb-6 sm:mb-8 w-full max-w-7xl">
+    <div class="card-body">
+      <div class="flex flex-col md:flex-row justify-between gap-4 mb-4 sm:mb-6">
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input
+            type="text"
+            [(ngModel)]="sqlIdFilter"
+            placeholder="Filter by SQL ID"
+            (input)="fetchAwrChartData()"
+            class="input input-bordered input-sm w-full sm:w-48"
+          />
+          <input
+            type="text"
+            [(ngModel)]="eventFilter"
+            placeholder="Filter by Event"
+            (input)="fetchASHChartData()"
+            class="input input-bordered input-sm w-full sm:w-48"
+          />
+        </div>
+
+        <div class="flex gap-2">
+          <button (click)="downloadAwrReport()" class="btn btn-primary btn-sm">
+            Download AWR
+          </button>
+          <button (click)="downloadAshReport()" class="btn btn-primary btn-sm">
+            Download ASH
+          </button>
+        </div>
       </div>
 
-      <div class="flex justify-end gap-4">
-        <button (click)="downloadAwrReport()" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl text-sm">
-          Download AWR
-        </button>
-        <button (click)="downloadAshReport()" class="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl text-sm">
-          Download ASH
-        </button>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="p-4 bg-white rounded-xl shadow">
-        <canvas id="cpuChart"></canvas>
-      </div>
-      <div  class="p-4 bg-white rounded-xl shadow">
-        <canvas id="memoryChart"></canvas>
-      </div>
-      <div class="p-4 bg-white rounded-xl shadow">
-        <canvas id="ioChart"></canvas>
-      </div>
-      <div class="col-span-2 p-4 bg-white rounded-xl shadow ">
-        <h2 class=" font-semibold text-gray-700">AWR</h2>
-        <canvas id="awrChart"></canvas>
-      </div>
-      <div class="col-span-1 p-4 bg-white rounded-xl shadow ">
-        <h2 class="  font-semibold text-gray-700">ASH</h2>
-        <canvas id="ashChart"></canvas>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 sm:mb-6">
+        <div class="card bg-base-100 shadow">
+          <div class="card-body p-3 sm:p-4">
+            <canvas id="cpuChart"></canvas>
+          </div>
+        </div>
+        <div class="card bg-base-100 shadow">
+          <div class="card-body p-3 sm:p-4">
+            <canvas id="memoryChart"></canvas>
+          </div>
+        </div>
+        <div class="card bg-base-100 shadow">
+          <div class="card-body p-3 sm:p-4">
+            <canvas id="ioChart"></canvas>
+          </div>
+        </div>
       </div>
 
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="card bg-base-100 shadow md:col-span-2">
+          <div class="card-body p-3 sm:p-4">
+            <h3 class="card-title text-sm sm:text-base mb-2">AWR Analysis</h3>
+            <canvas id="awrChart"></canvas>
+          </div>
+        </div>
+        <div class="card bg-base-100 shadow">
+          <div class="card-body p-3 sm:p-4">
+            <h3 class="card-title text-sm sm:text-base mb-2">ASH Analysis</h3>
+            <canvas id="ashChart"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-
   <!-- AWR Report Table -->
-  <div class="bg-white rounded-xl shadow-md p-6 mb-8">
-    <h2 class="text-2xl font-bold mb-4 text-gray-800">AWR Report</h2>
-    <div *ngIf="awrReport.length > 0" class="overflow-x-auto">
-      <table class="table table-zebra w-full">
-        <thead class="bg-gray-100">
-        <tr class="text-gray-700">
-          <th class="py-3 text-left">Snapshot ID</th>
-          <th class="py-3 text-left">Start Time</th>
-          <th class="py-3 text-left">End Time</th>
-          <th class="py-3 text-left">SQL ID</th>
-          <th class="py-3 text-left">Executions</th>
-          <th class="py-3 text-left">Elapsed Time</th>
-          <th class="py-3 text-left">CPU Time</th>
-          <th class="py-3 text-left">Buffer Gets</th>
-          <th class="py-3 text-left">Disk Reads</th>
-          <th class="py-3 text-left">Rows Processed</th>
-          <th class="py-3 text-left">Plan Hash Value</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let row of pagedAwrReport" class="hover:bg-gray-50">
-          <td class="py-2 text-left">{{ row.snapshotId }}</td>
-          <td class="py-2 text-left">{{ row.startTime }}</td>
-          <td class="py-2 text-left">{{ row.endTime }}</td>
-          <td class="py-2 text-left">{{ row.sqlId }}</td>
-          <td class="py-2 text-left">{{ row.executions }}</td>
-          <td class="py-2 text-left">{{ row.elapsedTime }}</td>
-          <td class="py-2 text-left">{{ row.cpuTime }}</td>
-          <td class="py-2 text-left">{{ row.bufferGets }}</td>
-          <td class="py-2 text-left">{{ row.diskReads }}</td>
-          <td class="py-2 text-left">{{ row.rowsProcessed }}</td>
-          <td class="py-2 text-left">{{ row.planHashValue }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <p *ngIf="awrReport.length === 0" class="mt-4 text-gray-600">No AWR data found.</p>
-    <div *ngIf="awrReport.length > 0" class="flex justify-end mt-4">
-      <div class="join">
-        <button class="join-item btn" [disabled]="currentPageAwr === 0" (click)="previousPageAwr()">«</button>
-        <button class="join-item btn" [disabled]="true">Page {{ currentPageAwr + 1}} of {{ totalPagesAwr}}</button>
-        <button class="join-item btn" [disabled]="currentPageAwr >= totalPagesAwr -1 " (click)="nextPageAwr()">»</button>
+  <div class="card bg-base-100 shadow-lg mb-6 sm:mb-8 w-full max-w-5xl">
+    <div class="card-body">
+      <h2 class="card-title mb-3 sm:mb-4 text-lg sm:text-xl">AWR Report</h2>
+      <div *ngIf="awrReport.length > 0" class="overflow-x-auto">
+        <table class="table table-compact sm:table-zebra w-full ">
+          <thead>
+          <tr>
+            <th>Snapshot ID</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>SQL ID</th>
+            <th>Executions</th>
+            <th>Elapsed Time</th>
+            <th>CPU Time</th>
+            <th>Buffer Gets</th>
+            <th>Disk Reads</th>
+            <th>Rows Processed</th>
+            <th>Plan Hash Value</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let row of pagedAwrReport" class="hover">
+            <td>{{ row.snapshotId }}</td>
+            <td>{{ row.startTime }}</td>
+            <td>{{ row.endTime }}</td>
+            <td>{{ row.sqlId }}</td>
+            <td>{{ row.executions }}</td>
+            <td>{{ row.elapsedTime }}</td>
+            <td>{{ row.cpuTime }}</td>
+            <td>{{ row.bufferGets }}</td>
+            <td>{{ row.diskReads }}</td>
+            <td>{{ row.rowsProcessed }}</td>
+            <td>{{ row.planHashValue }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="awrReport.length === 0" class="alert alert-info">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="stroke-current shrink-0 w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <span>No AWR data available</span>
+      </div>
+      <div *ngIf="awrReport.length > 0" class="flex justify-end mt-2 sm:mt-4">
+        <div class="join">
+          <button
+            class="join-item btn btn-sm"
+            [disabled]="currentPageAwr === 0"
+            (click)="previousPageAwr()"
+          >
+            «
+          </button>
+          <button class="join-item btn btn-sm">
+            {{ currentPageAwr + 1 }} / {{ totalPagesAwr }}
+          </button>
+          <button
+            class="join-item btn btn-sm"
+            [disabled]="currentPageAwr >= totalPagesAwr - 1"
+            (click)="nextPageAwr()"
+          >
+            »
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- ASH Report Table -->
-  <div class="bg-white rounded-xl shadow-md p-6">
-    <h2 class="text-2xl font-bold mb-4 text-gray-800">ASH Report</h2>
-    <div *ngIf="ashReport.length > 0" class="overflow-x-auto">
-      <table class="table table-zebra w-full">
-        <thead class="bg-gray-100">
-        <tr class="text-gray-700">
-          <th class="py-3 text-left">Session ID</th>
-          <th class="py-3 text-left">Event</th>
-          <th class="py-3 text-left">Wait Class</th>
-          <th class="py-3 text-left">Sample Time</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let ash of pagedAshReport" class="hover:bg-gray-50">
-          <td class="py-2 text-left">{{ ash.sessionId }}</td>
-          <td class="py-2 text-left">{{ ash.event }}</td>
-          <td class="py-2 text-left">{{ ash.waitClass }}</td>
-          <td class="py-2 text-left">{{ ash.sampleTime }}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <p *ngIf="ashReport.length === 0" class="mt-4 text-gray-600">No ASH data found.</p>
-    <div *ngIf="ashReport.length > 0" class="flex justify-end mt-4">
-      <div class="join">
-        <button class="join-item btn" [disabled]="currentPageAsh === 0" (click)="previousPageAsh()">«</button>
-        <button class="join-item btn" [disabled]="true">Page {{ currentPageAsh + 1}} of {{ totalPagesAsh}}</button>
-        <button class="join-item btn" [disabled]="currentPageAsh >= totalPagesAsh -1 " (click)="nextPageAsh()">»</button>
+  <div class="card bg-base-100 shadow-lg w-full max-w-5xl">
+    <div class="card-body">
+      <h2 class="card-title mb-3 sm:mb-4 text-lg sm:text-xl">ASH Report</h2>
+      <div *ngIf="ashReport.length > 0" class="overflow-x-auto">
+        <table class="table table-compact sm:table-zebra w-full  ">
+          <thead>
+          <tr>
+            <th>Session ID</th>
+            <th>Event</th>
+            <th>Wait Class</th>
+            <th>Sample Time</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let ash of pagedAshReport" class="hover">
+            <td>{{ ash.sessionId }}</td>
+            <td>{{ ash.event }}</td>
+            <td>{{ ash.waitClass }}</td>
+            <td>{{ ash.sampleTime }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="ashReport.length === 0" class="alert alert-info">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="stroke-current shrink-0 w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <span>No ASH data available</span>
+      </div>
+      <div *ngIf="ashReport.length > 0" class="flex justify-end mt-2 sm:mt-4">
+        <div class="join">
+          <button
+            class="join-item btn btn-sm"
+            [disabled]="currentPageAsh === 0"
+            (click)="previousPageAsh()"
+          >
+            «
+          </button>
+          <button class="join-item btn btn-sm">
+            {{ currentPageAsh + 1 }} / {{ totalPagesAsh }}
+          </button>
+          <button
+            class="join-item btn btn-sm"
+            [disabled]="currentPageAsh >= totalPagesAsh - 1"
+            (click)="nextPageAsh()"
+          >
+            »
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </main>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />

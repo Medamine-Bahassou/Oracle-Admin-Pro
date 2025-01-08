@@ -1,0 +1,14 @@
+# Incremental Level 1 database backup script
+
+# Connect to the target database (connection string will be passed via CLI)
+# Set backup location if not configured elsewhere
+#CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT '/u01/app/oracle/backup/%U';
+
+# Perform an incremental level 1 backup.
+BACKUP INCREMENTAL LEVEL 1 DATABASE;
+
+# Backup all archive logs
+BACKUP ARCHIVELOG ALL;
+
+# Print a confirmation message.
+#PRINT 'Incremental level 1 backup completed successfully.';

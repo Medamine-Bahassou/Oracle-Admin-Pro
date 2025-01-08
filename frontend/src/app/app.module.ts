@@ -29,6 +29,7 @@ import {FormsModule} from '@angular/forms';
 import { SlowQueriesComponent } from './components/optimisation/slow-queries/slow-queries.component';
 import { ScheduleStatisticsComponent } from './components/optimisation/schedule-statistics/schedule-statistics.component';
 import {NgOptimizedImage} from '@angular/common';
+import { DataGuardDashboardComponent } from './components/data-guard-dashboard/data-guard-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {NgOptimizedImage} from '@angular/common';
     DashboardComponent,
     UsersComponent,
     SlowQueriesComponent,
-    ScheduleStatisticsComponent
+    ScheduleStatisticsComponent,
+    DataGuardDashboardComponent
   ],
   imports: [
     BrowserModule,

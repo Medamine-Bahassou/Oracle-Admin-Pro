@@ -10,6 +10,7 @@ import {SecurityComponent} from './components/security-dashboard/security-dashbo
 import {UsersComponent} from './components/users/users.component';
 import {SlowQueriesComponent} from './components/optimisation/slow-queries/slow-queries.component';
 import {ScheduleStatisticsComponent} from './components/optimisation/schedule-statistics/schedule-statistics.component';
+import {DataGuardDashboardComponent} from './components/data-guard-dashboard/data-guard-dashboard.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/landing', pathMatch: 'full' }, // Default route
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'users', component: UsersComponent },
       { path: 'slow', component: SlowQueriesComponent },
       { path: 'schedule', component: ScheduleStatisticsComponent },
+      { path: 'guard', component: DataGuardDashboardComponent },
     ]
   },
 

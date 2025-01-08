@@ -1,0 +1,64 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">Oracle Data Guard Dashboard</h1>
+
+  <div class="mb-6 flex flex-wrap gap-4">
+    <button (click)="updateStatus()" class="btn btn-primary">
+      <fa-icon [icon]="faSync" class="mr-2"></fa-icon>
+      Update Status
+    </button>
+    <button (click)="simulateSwitchover()" class="btn btn-secondary">
+      <fa-icon [icon]="faExchangeAlt" class="mr-2"></fa-icon>
+      Simulate Switchover
+    </button>
+    <button (click)="simulateFailover()" class="btn btn-warning">
+      <fa-icon [icon]="faExclamationTriangle" class="mr-2"></fa-icon>
+      Simulate Failover
+    </button>
+    <button (click)="simulateFailback()" class="btn btn-success">
+      <fa-icon [icon]="faUndoAlt" class="mr-2"></fa-icon>
+      Simulate Failback
+    </button>
+  </div>
+
+  <h2 class="text-2xl font-semibold mb-4 text-gray-700">Data Guard Configurations</h2>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <thead class="bg-gray-100">
+      <tr>
+        <th class="py-3 px-4 text-left">Primary Database</th>
+        <th class="py-3 px-4 text-left">Standby Database</th>
+        <th class="py-3 px-4 text-left">Status</th>
+        <th class="py-3 px-4 text-left">Protection Mode</th>
+        <th class="py-3 px-4 text-left">Transport Lag</th>
+        <th class="py-3 px-4 text-left">Apply Lag</th>
+        <th class="py-3 px-4 text-left">Last Sync</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let config of configs" class="border-b border-gray-200 hover:bg-gray-50">
+        <td class="py-3 px-4">{{ config.primaryDatabase }}</td>
+        <td class="py-3 px-4">{{ config.standbyDatabase }}</td>
+        <td class="py-3 px-4">
+            <span [ngClass]="{
+              'text-green-600': config.status === 'Healthy',
+              'text-yellow-600': config.status === 'Warning',
+              'text-red-600': config.status === 'Critical'
+            }">
+              {{ config.status }}
+            </span>
+        </td>
+        <td class="py-3 px-4">{{ config.protectionMode }}</td>
+        <td class="py-3 px-4">{{ config.transportLag }}</td>
+        <td class="py-3 px-4">{{ config.applyLag }}</td>
+        <td class="py-3 px-4">{{ config.lastSync | date:'medium' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="text-2xl font-semibold mt-8 mb-4 text-gray-700">Availability Report</h2>
+  <div class="bg-white shadow-md rounded-lg p-6">
+    <p class="text-gray-600">{{ availabilityReport }}</p>
+  </div>
+</div>
+

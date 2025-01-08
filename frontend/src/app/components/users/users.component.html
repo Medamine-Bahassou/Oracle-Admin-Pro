@@ -1,4 +1,4 @@
-<div class="min-h-screen">
+<div class="min-h-screen p-6">
   <div class="mb-8">
     <h1 class="text-2xl font-medium text-gray-900">Users</h1>
   </div>
@@ -7,13 +7,13 @@
       <div class="p-6">
 
         <button (click)="openCreateModal()" class="btn btn-primary mb-4">
+          <i class="fa-solid fa-user-plus"></i>
           Add User
         </button>
 
-        <button (click)="openCreateRoleModal()" class="btn btn-secondary mb-4 ml-2">
-          Add Role
-        </button>
-        <button (click)="openEditRoleModal()" class="btn btn-secondary mb-4 ml-2">
+
+        <button (click)="openEditRoleModal()" class="btn btn-accent mb-4 ml-2">
+          <i class="fa-solid fa-people-group"></i>
           Show Roles
         </button>
 
@@ -143,8 +143,16 @@
         <!-- Edit Role Modal  -->
         <dialog #editRoleModal id="editRoleModal" class="modal">
           <div class="modal-box">
-            <h3 class="text-xl font-bold mb-4">Edit Roles</h3>
+            <h3 class="text-xl font-bold mb-4"><i class="fa-solid fa-pen-to-square"></i> Edit Roles</h3>
+
+            <div class="  bg-white w-full flex justify-end items-center z-20">
+              <button (click)="openCreateRoleModal()" class="btn btn-secondary mb-4 ml-2">
+                <i class="fa-solid fa-plus"></i>
+                Add Role
+              </button>
+            </div>
             <div class="overflow-x-auto">
+
               <table class="table w-full">
                 <thead>
                 <tr class="bg-gray-100">
@@ -168,12 +176,14 @@
                       (click)="openEditRolePrivilegesModal(role)"
                       class="btn btn-sm btn-warning mr-1"
                     >
+                      <i class="fa-solid fa-pen-to-square"></i>
                       Edit
                     </button>
                     <button
                       (click)="dropRole(role.role)"
                       class="btn btn-sm btn-error"
                     >
+                      <i class="fa-solid fa-trash"></i>
                       Delete
                     </button>
                   </td>
@@ -313,9 +323,11 @@
                   Roles
                 </button>
                 <button (click)="openEditModal(user)" class="btn btn-sm btn-warning mr-1">
+                  <i class="fa-solid fa-pen-to-square"></i>
                   Edit
                 </button>
                 <button (click)="deleteUser(user.id!)" class="btn btn-sm btn-error">
+                  <i class="fa-solid fa-trash"></i>
                   Delete
                 </button>
               </td>
@@ -327,3 +339,4 @@
     </div>
   </main>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />

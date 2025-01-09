@@ -2,9 +2,13 @@ package ma.fstt.lsi.oracle.service;
 
 import lombok.extern.slf4j.Slf4j;
 import ma.fstt.lsi.oracle.dao.BackupHistoryRepository;
+import ma.fstt.lsi.oracle.dao.BackupScheduleRepository;
 import ma.fstt.lsi.oracle.model.BackupHistory;
+import ma.fstt.lsi.oracle.model.BackupSchedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ScheduledFuture;
 
 @Service
 @Slf4j
@@ -21,6 +27,14 @@ public class RmanServiceImpl {
 
     @Autowired
     private BackupHistoryRepository backupHistoryRepository;
+
+    @Autowired
+    private BackupScheduleRepository backupScheduleRepository;
+
+    private ScheduledFuture<?> currentScheduledTask;
+
+    @Autowired
+    private TaskScheduler taskScheduler;
 
 
     public String performFullBackup() {
@@ -199,5 +213,55 @@ public class RmanServiceImpl {
         backupHistoryRepository.save(new BackupHistory("RESTORE", status, LocalDateTime.now(), result_backup_history));
 
         return result;
+    }
+    public BackupSchedule saveBackupSchedule(BackupSchedule newSchedule) {
+        // Deactivate any existing schedule
+        backupScheduleRepository.findByActive(true)
+                .ifPresent(existingSchedule -> {
+                    existingSchedule.setActive(false);
+                    backupScheduleRepository.save(existingSchedule);
+
+                    // Cancel existing scheduled task if it exists
+                    if (currentScheduledTask != null) {
+                        currentScheduledTask.cancel(false);
+                    }
+                });
+
+        // Save and activate new schedule
+        newSchedule.setActive(true);
+        BackupSchedule savedSchedule = backupScheduleRepository.save(newSchedule);
+
+        // Schedule the new backup task
+        scheduleBackup(savedSchedule);
+
+        return savedSchedule;
+    }
+
+    private void scheduleBackup(BackupSchedule schedule) {
+        Runnable backupTask = () -> {
+            if ("FULL".equals(schedule.getBackupType())) {
+                performFullBackup();
+            } else if ("INCREMENTAL".equals(schedule.getBackupType())) {
+                performIncrementalBackup(schedule.getIncrementalLevel());
+            }
+        };
+
+        currentScheduledTask = taskScheduler.schedule(
+                backupTask,
+                new CronTrigger(schedule.getCronExpression())
+        );
+    }
+
+    public Optional<BackupSchedule> getCurrentSchedule() {
+        return backupScheduleRepository.findByActive(true);
+    }
+
+    public void deleteSchedule(Long scheduleId) {
+        backupScheduleRepository.findById(scheduleId).ifPresent(schedule -> {
+            if (schedule.isActive() && currentScheduledTask != null) {
+                currentScheduledTask.cancel(false);
+            }
+            backupScheduleRepository.deleteById(scheduleId);
+        });
     }
 }

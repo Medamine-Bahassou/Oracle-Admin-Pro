@@ -1,8 +1,10 @@
 package ma.fstt.lsi.oracle.controller;
 
 import lombok.RequiredArgsConstructor;
+import ma.fstt.lsi.oracle.dto.BackupScheduleDTO;
 import ma.fstt.lsi.oracle.model.BackupHistory;
 
+import ma.fstt.lsi.oracle.model.BackupSchedule;
 import ma.fstt.lsi.oracle.service.RmanServiceImpl;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -50,5 +52,56 @@ public class BackupController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
         List<BackupHistory> history = rmanService.getBackupHistoryByDateRange(startDate, endDate);
         return ResponseEntity.ok(history);
+    }
+
+    @PostMapping("/schedule")
+    public ResponseEntity<BackupSchedule> createSchedule(@RequestBody BackupScheduleDTO dto) {
+        BackupSchedule schedule;
+
+        switch (dto.getRecurrenceType()) {
+            case DAILY:
+                schedule = new BackupSchedule(
+                        dto.getExecutionTime(),
+                        dto.getBackupType(),
+                        dto.getIncrementalLevel()
+                );
+                break;
+
+            case WEEKLY:
+                schedule = new BackupSchedule(
+                        dto.getExecutionTime(),
+                        dto.getSelectedDays(),
+                        dto.getBackupType(),
+                        dto.getIncrementalLevel()
+                );
+                break;
+
+            case MONTHLY:
+                schedule = new BackupSchedule(
+                        dto.getExecutionTime(),
+                        dto.getDayOfMonth(),
+                        dto.getBackupType(),
+                        dto.getIncrementalLevel()
+                );
+                break;
+
+            default:
+                return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(rmanService.saveBackupSchedule(schedule));
+    }
+
+    @GetMapping("/schedule/current")
+    public ResponseEntity<BackupSchedule> getCurrentSchedule() {
+        return rmanService.getCurrentSchedule()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("schedule/{id}")
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id) {
+        rmanService.deleteSchedule(id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -7,6 +7,7 @@ import {BackupHistory} from '../../model/backup-history';
 @Injectable({
   providedIn: 'root'
 })
+
 export class BackupService {
   private baseUrl = 'http://localhost:8080/api/backups'; // Replace with your Spring backend URL
 
@@ -32,5 +33,17 @@ export class BackupService {
 
   performRestore(): Observable<string> {
     return this.http.post<string>(`${this.baseUrl}/restore`, {});
+  }
+
+  createSchedule(scheduleData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/schedule`, scheduleData);
+  }
+
+  getCurrentSchedule(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/schedule/current`);
+  }
+
+  deleteSchedule(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/schedule/${id}`);
   }
 }

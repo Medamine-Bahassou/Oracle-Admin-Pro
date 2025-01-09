@@ -12,6 +12,8 @@
 
 Oracle Admin Pro is a web-based administration application designed to streamline database management tasks for Oracle databases. Built using Java EE (Spring Boot) for the backend and Angular for the frontend, this application aims to provide a user-friendly interface for key administrative operations.
 
+![de](https://github.com/user-attachments/assets/d1b89aa0-3a6b-442f-8568-6d413800d469)
+
 ## Key Features
 
 Based on the provided document, the project aims to provide the following functionalities:

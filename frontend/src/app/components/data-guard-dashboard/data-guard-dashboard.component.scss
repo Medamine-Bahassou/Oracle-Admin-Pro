@@ -1,0 +1,20 @@
+.btn {
+  @apply px-4 py-2 rounded-md text-white font-semibold transition-colors duration-300 flex items-center;
+}
+
+.btn-primary {
+  @apply bg-blue-600 hover:bg-blue-700;
+}
+
+.btn-secondary {
+  @apply bg-gray-600 hover:bg-gray-700;
+}
+
+.btn-warning {
+  @apply bg-yellow-600 hover:bg-yellow-700;
+}
+
+.btn-success {
+  @apply bg-green-600 hover:bg-green-700;
+}
+

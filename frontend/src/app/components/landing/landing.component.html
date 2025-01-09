@@ -1,70 +1,269 @@
-<div class="bg-white min-h-screen px-0  ">
+<div class="min-h-screen bg-base-100">
   <!-- Navbar -->
-  <div class="navbar bg-base-100 ">
+  <div class="navbar bg-base-100 fixed top-0 z-50 shadow-sm">
     <div class="navbar-start">
-      <a class="   ">
-        <img src="/logo_black.png" width="100" alt="logo"/>
+      <div class="dropdown">
+        <label tabindex="0" class="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </label>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a class="link link-hover">Home</a></li>
+          <li><a class="link link-hover">Features</a></li>
+          <li><a class="link link-hover">Services</a></li>
+          <li><a class="link link-hover">Contact</a></li>
+        </ul>
+      </div>
+      <a class="normal-case text-xl">
+        <img src="/logo_black.png" width="70" alt="logo" />
       </a>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-end hidden lg:flex">
       <ul class="menu menu-horizontal px-1 font-medium">
-        <li><a class="hover:text-primary">Home</a></li>
-        <li><a class="hover:text-primary">Profil</a></li>
-        <li><a class="hover:text-primary">About</a></li>
-        <li><a class="hover:text-primary">Portfolio</a></li>
-        <li><a class="hover:text-primary">Contact</a></li>
+        <li><a class="link link-hover">Home</a></li>
+        <li><a class="link link-hover">Features</a></li>
+        <li><a class="link link-hover">Services</a></li>
+        <li><a class="link link-hover">Contact</a></li>
       </ul>
     </div>
   </div>
 
-  <!-- Main Content -->
-  <div class="  mx-auto flex flex-col lg:flex-row py-10 pl-28  justify-between">
-    <!-- Left Side: Login Form -->
-    <div class="lg:w-1/2 flex flex-col justify-center items-start">
-      <h1 class="text-4xl font-bold text-primary mb-8">Welcome</h1>
-      <div class="w-full">
-        <div class="form-control w-full mb-4">
-          <label class="label">
-            <span class="label-text font-medium">Username</span>
-          </label>
-          <div class="relative">
-            <input type="text" placeholder="Username" class="input input-bordered w-full pl-8" [(ngModel)]="loginData.email" />
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute left-2 top-3 text-gray-400">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-            </svg>
-          </div>
-
-        </div>
-        <div class="form-control w-full mb-4">
-          <label class="label">
-            <span class="label-text font-medium">Password</span>
-          </label>
-          <div class="relative">
-            <input type="password" placeholder="Password" class="input input-bordered w-full pl-8"  [(ngModel)]="loginData.password" />
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute left-2 top-3 text-gray-400">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a3 3 0 00-3-3h-4.5a3 3 0 00-3 3v3.75m-.75 10.5v-4.875c0-.621.504-1.125 1.125-1.125h9.75c.621 0 1.125.504 1.125 1.125v4.875m-10.5-10.5h9.75a1.125 1.125 0 011.125 1.125v9.75a1.125 1.125 0 01-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125v-9.75a1.125 1.125 0 011.125-1.125z" />
-            </svg>
-          </div>
-        </div>
-        <div class="flex justify-between items-center mb-6">
-          <div class="flex items-center">
-            <input type="checkbox" class="checkbox checkbox-primary mr-2" />
-            <span class="text-sm">Remember</span>
-          </div>
-          <a href="#" class="text-sm link link-primary">Forgot Password ?</a>
-        </div>
-        <button class="btn btn-primary w-full" (click)="login()">Submit</button>
+  <!-- Hero Section -->
+  <div class="hero min-h-screen bg-base-200">
+    <div class="hero-content flex-col lg:flex-row-reverse">
+      <img src="/logo_cover.png" class="max-w-sm rounded-lg" alt="Hero Image" />
+      <div>
+        <h1 class="text-5xl font-bold">Oracle Database Management</h1>
+        <p class="py-6">
+          Expert solutions for your Oracle Database needs. We provide comprehensive services to ensure optimal performance and reliability.
+        </p>
+        <button class="btn btn-primary">Get Started</button>
       </div>
-
-    </div>
-
-    <!-- Right Side: Illustration -->
-    <div class="float-end flex justify-end items-center">
-      <img
-        src="/banner.jpg"
-        alt="Login Illustration"
-        class="max-w-lg rounded-xl w-full"
-      />
     </div>
   </div>
+
+  <!-- Services Section -->
+  <div class="py-16 bg-base-100">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12">Our Services</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="card bg-base-200 shadow-xl">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-5m0 0l7 5m-7-5v18" />
+            </svg>
+            <h3 class="card-title">Database Installation and Configuration</h3>
+            <p>Expert setup and configuration of Oracle Databases.</p>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow-xl">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <h3 class="card-title">Performance Tuning and Optimization</h3>
+            <p>Maximize your database performance with our optimization techniques.</p>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow-xl">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <h3 class="card-title">Backup and Recovery</h3>
+            <p>Robust solutions to protect your valuable data.</p>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow-xl">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+            <h3 class="card-title">Database Migration and Upgrades</h3>
+            <p>Seamlessly migrate or upgrade your Oracle Databases to the latest versions.</p>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow-xl">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.747 0-3.332.477-4.5 1.253" />
+            </svg>
+            <h3 class="card-title">Security and Compliance</h3>
+            <p>Protect your database with the latest security measures.</p>
+          </div>
+        </div>
+        <div class="card bg-base-200 shadow-xl">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            <h3 class="card-title">Cloud Database Solutions</h3>
+            <p>Manage your Oracle Databases in the cloud with ease.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Features Section -->
+  <div class="py-16 bg-base-200">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12">Key Features of Oracle Database</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h3 class="card-title">Advanced Security</h3>
+            <p>Robust security features to protect your sensitive data.</p>
+          </div>
+        </div>
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h3 class="card-title">High Availability</h3>
+            <p>Ensuring your database is always accessible with minimal downtime.</p>
+          </div>
+        </div>
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h3 class="card-title">Scalability</h3>
+            <p>Easily scale your database to meet growing business demands.</p>
+          </div>
+        </div>
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h3 class="card-title">Performance</h3>
+            <p>Optimized for high-performance data processing and transactions.</p>
+          </div>
+        </div>
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h3 class="card-title">Data Warehousing</h3>
+            <p>Comprehensive solutions for data warehousing and analytics.</p>
+          </div>
+        </div>
+        <div class="card bg-base-100 shadow-xl">
+          <div class="card-body">
+            <h3 class="card-title">Backup and Recovery</h3>
+            <p>Reliable tools for backup and disaster recovery planning.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Login Section -->
+  <div class="py-16 bg-base-100">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row justify-between items-center gap-12">
+        <!-- Left Side: Login Form -->
+        <div class="lg:w-1/2">
+          <h2 class="text-4xl font-bold mb-8">Login to Your Account</h2>
+          <div class="card bg-base-200 shadow-xl">
+            <div class="card-body">
+              <!-- Username Input -->
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text font-medium">Username</span>
+                </label>
+                <div class="relative">
+                  <input type="text" placeholder="Username" class="input input-bordered w-full pl-12" [(ngModel)]="loginData.email" />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Password Input -->
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text font-medium">Password</span>
+                </label>
+                <div class="relative">
+                  <input type="password" placeholder="Password" class="input input-bordered w-full pl-12" [(ngModel)]="loginData.password" />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a3 3 0 00-3-3h-4.5a3 3 0 00-3 3v3.75m-.75 10.5v-4.875c0-.621.504-1.125 1.125-1.125h9.75c.621 0 1.125.504 1.125 1.125v4.875m-10.5-10.5h9.75a1.125 1.125 0 011.125 1.125v9.75a1.125 1.125 0 01-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125v-9.75a1.125 1.125 0 011.125-1.125z" />
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Remember Me and Forgot Password -->
+              <div class="flex justify-between items-center mt-4">
+                <div class="flex items-center">
+                  <input type="checkbox" class="checkbox checkbox-primary mr-2" />
+                  <span class="text-sm">Remember me</span>
+                </div>
+                <a href="#" class="text-sm link link-primary">Forgot Password?</a>
+              </div>
+
+              <!-- Submit Button -->
+              <button class="btn btn-primary w-full mt-6" (click)="login()">Login</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Illustration -->
+        <div class="lg:w-1/2">
+          <img src="/logo_cover.png" alt="Login Illustration" class="max-w-lg rounded-xl mx-auto" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="py-16 bg-base-200">
+    <div class="container mx-auto px-4">
+      <h2 class="text-4xl font-bold text-center mb-12">Contact Us</h2>
+      <div class="card bg-base-100 shadow-xl max-w-2xl mx-auto">
+        <div class="card-body">
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Name</span>
+            </label>
+            <input type="text" placeholder="Your name" class="input input-bordered" />
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Email</span>
+            </label>
+            <input type="email" placeholder="Your email" class="input input-bordered" />
+          </div>
+          <div class="form-control">
+            <label class="label">
+              <span class="label-text">Message</span>
+            </label>
+            <textarea class="textarea textarea-bordered h-24" placeholder="Your message"></textarea>
+          </div>
+          <div class="form-control mt-6">
+            <button class="btn btn-primary">Send Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer p-10 bg-neutral text-neutral-content">
+    <div>
+      <img src="/logo_black.png" width="100" alt="logo" class="filter invert" />
+      <p>Providing reliable Oracle solutions since 2023</p>
+    </div>
+    <div>
+      <span class="footer-title">Services</span>
+      <a class="link link-hover">Database Installation</a>
+      <a class="link link-hover">Performance Tuning</a>
+      <a class="link link-hover">Backup and Recovery</a>
+      <a class="link link-hover">Cloud Solutions</a>
+    </div>
+    <div>
+      <span class="footer-title">Company</span>
+      <a class="link link-hover">About us</a>
+      <a class="link link-hover">Contact</a>
+      <a class="link link-hover">Jobs</a>
+      <a class="link link-hover">Press kit</a>
+    </div>
+    <div>
+      <span class="footer-title">Legal</span>
+      <a class="link link-hover">Terms of use</a>
+      <a class="link link-hover">Privacy policy</a>
+      <a class="link link-hover">Cookie policy</a>
+    </div>
+  </footer>
 </div>

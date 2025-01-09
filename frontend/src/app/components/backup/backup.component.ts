@@ -18,16 +18,19 @@ import {BackupService} from '../../services/servie-backup/backup.service';
 
 import {catchError, finalize, of, timeout} from 'rxjs';
 import {BackupHistory} from '../../model/backup-history';
-import {FormsModule} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-backup',
   templateUrl: './backup.component.html',
-  imports: [NgForOf, NgClass, DatePipe, FontAwesomeModule, FormsModule],
+  imports: [NgForOf, NgClass, DatePipe, FontAwesomeModule, FormsModule, ReactiveFormsModule, NgIf],
   standalone: true,
   styleUrls: ['./backup.component.scss']
 })
 export class BackupComponent implements OnInit {
+
+
+
   backupHistory: BackupHistory[] = [];
   isLoading = true;
   isOperationLoading = false;
@@ -43,7 +46,8 @@ export class BackupComponent implements OnInit {
     startDate: '',
     endDate: ''
   };
-
+  backupForm: FormGroup;
+  currentSchedule: any = null;
   // New properties for table features
   searchTerm: string = '';
   pageSize: number = 5;
@@ -59,10 +63,18 @@ export class BackupComponent implements OnInit {
   faSearch = faSearch;
   faChevronLeft = faChevronLeft;
   faChevronRight = faChevronRight;
-  constructor(private backupService: BackupService) {}
+  constructor(private backupService: BackupService,private fb: FormBuilder,) {
+    this.backupForm = this.fb.group({
+      recurrenceType: ['DAILY', Validators.required],
+      executionTime: ['', Validators.required],
+      backupType: ['FULL', Validators.required],
+      incrementalLevel: [0, Validators.required],
+    });
+  }
 
   ngOnInit() {
     this.loadBackupHistory();
+    this.getCurrentSchedule();
   }
 
   calculateStats(history: BackupHistory[]) {
@@ -75,7 +87,59 @@ export class BackupComponent implements OnInit {
   }
 
 // Modify your loadBackupHistory method
+  getCurrentSchedule() {
+    this.backupService.getCurrentSchedule().subscribe(
+      (schedule) => {
+        this.currentSchedule = schedule;
+        this.updateFormWithCurrentSchedule();
+      },
+      (error) => console.error('Error fetching current schedule:', error)
+    );
+  }
 
+  updateFormWithCurrentSchedule() {
+    if (this.currentSchedule) {
+      this.backupForm.patchValue({
+        recurrenceType: this.currentSchedule.recurrenceType,
+        executionTime: this.currentSchedule.executionTime,
+        backupType: this.currentSchedule.backupType,
+        incrementalLevel: this.currentSchedule.incrementalLevel
+      });
+    }
+  }
+
+  onSubmit() {
+    if (this.backupForm.valid) {
+      this.backupService.createSchedule(this.backupForm.value).subscribe(
+        (response) => {
+          console.log('Schedule created:', response);
+          this.getCurrentSchedule();
+        },
+        (error) => console.error('Error creating schedule:', error)
+      );
+    }
+  }
+
+  onDelete() {
+    if (this.currentSchedule && this.currentSchedule.id) {
+      this.backupService.deleteSchedule(this.currentSchedule.id).subscribe(
+        () => {
+          console.log('Schedule deleted');
+          this.backupForm.reset({
+            recurrenceType: 'DAILY',
+            backupType: 'FULL',
+            incrementalLevel: 0
+          });
+          this.currentSchedule = null;
+        },
+        (error) => console.error('Error deleting schedule:', error)
+      );
+    }
+  }
+
+  showIncrementalLevel(): boolean {
+    return this.backupForm.get('backupType')?.value === 'INCREMENTAL';
+  }
   onSearch(term: string) {
     this.searchTerm = term;
     this.currentPage = 1;

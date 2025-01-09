@@ -28,6 +28,8 @@ import { UsersComponent } from './components/users/users.component';
 import {FormsModule} from '@angular/forms';
 import { SlowQueriesComponent } from './components/optimisation/slow-queries/slow-queries.component';
 import { ScheduleStatisticsComponent } from './components/optimisation/schedule-statistics/schedule-statistics.component';
+import {NgOptimizedImage} from '@angular/common';
+import { DataGuardDashboardComponent } from './components/data-guard-dashboard/data-guard-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { ScheduleStatisticsComponent } from './components/optimisation/schedule-
     DashboardComponent,
     UsersComponent,
     SlowQueriesComponent,
-    ScheduleStatisticsComponent
+    ScheduleStatisticsComponent,
+    DataGuardDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import { ScheduleStatisticsComponent } from './components/optimisation/schedule-
 
 
     BaseChartDirective,
-    FormsModule
+    FormsModule,
+    NgOptimizedImage
   ],
   providers: [], // Add SecurityService here
   bootstrap: [AppComponent]

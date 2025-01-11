@@ -128,7 +128,3 @@ If you wish to contribute to the project, please follow these guidelines:
 2.  Create a new branch for your feature or bug fix.
 3.  Commit your changes with clear and descriptive messages.
 4.  Submit a pull request to the main repository.
-
-## License
-
-This project is licensed under the [Specify your license here].
